@@ -39,6 +39,12 @@ import com.paas.PaaSApplicationException;
 //@Component
 public class ReadFileInList {
 
+	/**
+	 * Read whole file and returns a list with file lines
+	 * 
+	 * @param path
+	 * 				path to file
+	 */
 	public static List<String> readFileInList(Path path) throws PaaSApplicationException {
 		
 		List<String> lines = Collections.emptyList();

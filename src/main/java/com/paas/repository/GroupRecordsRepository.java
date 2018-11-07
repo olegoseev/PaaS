@@ -109,7 +109,7 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 		
 		try {
 			
-			// Find a group which match to all given fileds
+			// Find a group which match to all given fields
 			if(!group.getName().isEmpty()) {
 				List<Group> _groups = groups.stream()
 						.filter(g -> g.getName().equals(group.getName()))
