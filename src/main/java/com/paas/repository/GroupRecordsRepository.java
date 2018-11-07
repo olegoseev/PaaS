@@ -117,7 +117,6 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 
 				groups = _groups;
 			}
-			System.out.println(groups);
 			if(group.getGid() != AppConfig.GID_NOT_DEFINED) {
 				List<Group> _groups = groups.stream()
 						.filter(g -> g.getGid() == group.getGid())
@@ -125,7 +124,6 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 
 				groups = _groups;
 			}		
-			System.out.println(groups);
 			if(!group.getMembers().isEmpty()) {
 				List<Group> _groups = groups.stream()
 						.filter(g -> g.getMembers().containsAll(group.getMembers()))
@@ -137,8 +135,6 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 			throw new PaaSApplicationException("Null pointer exception encountered");
 			
 		}
-		
-		System.out.println(groups);
 		
 		return groups;
 	}

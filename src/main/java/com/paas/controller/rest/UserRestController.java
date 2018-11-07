@@ -99,6 +99,11 @@ public class UserRestController {
 		
 		try {
 			User user = userRepository.findBy(id);
+			
+			if(user == null) {
+				return new ResponseEntity<Object>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
+			}
+			
 			List<Group> groups = groupRepository.findAllGroupsForUser(user);
 			
 			if(groups == null) {
