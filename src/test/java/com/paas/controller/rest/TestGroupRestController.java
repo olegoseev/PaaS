@@ -2,6 +2,7 @@ package com.paas.controller.rest;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,6 +49,18 @@ public class TestGroupRestController {
 
 	}
 	
+	
+	@Test
+	public void getGroupNotFound() throws Exception {
+		// group 22 doesn't exist
+		this.mockMvc.perform(get("/groups/22"))
+					.andDo(print())
+					.andExpect(status().is4xxClientError())
+					.andExpect(content().contentType("application/json;charset=UTF-8"))
+					.andExpect(content().json("{'status': 'error','error':'NOT_FOUND'}"));
+	}
+	
+	
 	@Test
 	public void queryGroups() throws Exception {
 		// looking for a group with name:sys and gid:3
@@ -56,5 +69,15 @@ public class TestGroupRestController {
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
 					.andExpect(content().json("{'status': 'OK','success':'OK','data':[{'name':'sys','gid':3}]}"));
 
+	}
+	
+	@Test
+	public void queryUserNotFound() throws Exception {
+		// query group with valid gid and different name
+		this.mockMvc.perform(get("/groups/query?gid=3&&name=unknown"))
+			        .andDo(print())
+					.andExpect(status().is4xxClientError())
+					.andExpect(content().contentType("application/json;charset=UTF-8"))
+					.andExpect(content().json("{'status': 'error','error':'NOT_FOUND'}"));
 	}
 }
