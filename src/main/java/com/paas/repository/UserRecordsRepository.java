@@ -56,8 +56,6 @@ public class UserRecordsRepository implements BaseRepository<Integer, User> {
 			// Converting path string to path
 			Path path = Paths.get(userFile);
 			
-			System.out.println(path.toString());
-			
 			// parse file and fill the list with new data
 			userList = parser.parse(path);
 		

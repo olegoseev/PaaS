@@ -13,34 +13,27 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.paas.repository.GroupRecordsRepository;
 import com.paas.repository.UserRecordsRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-@TestPropertySource (properties = {"user.records = src/test/resources/passwd", "userFile = src/test/resources/passwd"})
+@TestPropertySource (properties = {"user.records = src/test/resources/passwd", "group.records = src/test/resources/group"})
+@ContextConfiguration
 public class TestUserRestController {
 	
 	@Autowired
 	private MockMvc mockMvc;
 	
-
-	@MockBean
-	private UserRecordsRepository userRepo;
-	
-	@Value("${user.records}")
-	private String realFile;
-	
 	@Test
 	public void getAllUsers() throws Exception {
-		
-		ReflectionTestUtils.setField(userRepo, "userFile", realFile);
 		
 		this.mockMvc.perform(get("/users"))
 					.andDo(print())
@@ -50,12 +43,33 @@ public class TestUserRestController {
 	
 	@Test
 	public void getUser() throws Exception {
-		
-		
+		// trying to get user - games:x:5:60:games:/usr/games:/usr/sbin/nologin
 		this.mockMvc.perform(get("/users/5"))
 					.andDo(print())
 					.andExpect(status().isOk())
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
 					.andExpect(content().json("{'status': 'OK','success':'OK','data':{'name':'games','uid':5,'gid':60,'comment':'games','home':'/usr/games'}}"));
+	}
+	
+	@Test
+	public void getAllGroupsForUser() throws Exception {
+		// requesting groups for user - sys:x:3:3:sys:/dev:/usr/sbin/nologin
+		// the user should appear in two groups
+		this.mockMvc.perform(get("/users/3/groups"))
+					.andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(content().contentType("application/json;charset=UTF-8"))
+					// check some key : value fields in the response
+					.andExpect(content().json("{'status': 'OK','success':'OK', 'data':[{'name':'sys','gid':3},{'name':'adm','gid':4}]}"));
+	}
+	
+	@Test
+	public void queryUser() throws Exception {
+		// query user - mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+		this.mockMvc.perform(get("/users/query?uid=8&name=mail"))
+			        .andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(content().contentType("application/json;charset=UTF-8"))
+					.andExpect(content().json("{'status': 'OK','success':'OK','data':[{'name':'mail','uid':8,'gid':8,'comment':'mail','home':'/var/mail','shell':'/usr/sbin/nologin'}]}"));
 	}
 }
