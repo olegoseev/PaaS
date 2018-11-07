@@ -8,18 +8,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import com.paas.repository.GroupRecordsRepository;
-import com.paas.repository.UserRecordsRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,7 +33,8 @@ public class TestUserRestController {
 		this.mockMvc.perform(get("/users"))
 					.andDo(print())
 					.andExpect(status().isOk())
-					.andExpect(content().contentType("application/json;charset=UTF-8"));
+					.andExpect(content().contentType("application/json;charset=UTF-8"))
+					.andExpect(content().json("{'status': 'OK','success':'OK'}"));
 	}
 	
 	@Test

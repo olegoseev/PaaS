@@ -28,11 +28,10 @@
 package com.paas.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import com.paas.PaaSApplicationException;
 import com.paas.config.AppConfig;
 
 
@@ -52,7 +51,7 @@ public class Group implements Serializable {
 	public Group() {
 		name = AppConfig.EMPTY_STRING;
 		gid  = AppConfig.GID_NOT_DEFINED;
-		members = new ArrayList<>();
+		members = Collections.emptyList();
 	}
 
 	public String getName() {
@@ -77,9 +76,6 @@ public class Group implements Serializable {
 	}
 
 	public void setMembers(List<String> members) {
-		if (!(members instanceof ArrayList)) {
-			throw new PaaSApplicationException("Object type missmatch");
-		}
 		this.members = members;
 	}
 

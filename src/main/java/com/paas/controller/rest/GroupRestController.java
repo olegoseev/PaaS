@@ -94,9 +94,12 @@ public class GroupRestController {
 		
 		try {
 			
-			group.setName(map.containsKey(AppConfig.GROUP_NAME) ? (String)map.get(AppConfig.GROUP_NAME).get(0) : AppConfig.EMPTY_STRING);
-			group.setGid(map.containsKey(AppConfig.GROUP_GID) ? Integer.parseInt((String)map.get(AppConfig.GROUP_GID).get(0)) : AppConfig.GID_NOT_DEFINED);
-			group.setMembers(map.containsKey(AppConfig.GROUP_MEMBER) ? map.get(AppConfig.GROUP_MEMBER) : Collections.emptyList());
+			group.setName(map.containsKey(AppConfig.GROUP_NAME) ? 
+					(String)map.get(AppConfig.GROUP_NAME).get(0) : AppConfig.EMPTY_STRING);
+			group.setGid(map.containsKey(AppConfig.GROUP_GID) ? 
+					Integer.parseInt((String)map.get(AppConfig.GROUP_GID).get(0)) : AppConfig.GID_NOT_DEFINED);
+			group.setMembers(map.containsKey(AppConfig.GROUP_MEMBER) ? 
+					map.get(AppConfig.GROUP_MEMBER) : Collections.emptyList());
 			
 		} catch (NullPointerException ne) {
 			LOG.error(ne.getMessage());
@@ -121,7 +124,7 @@ public class GroupRestController {
 	 */
 	@RequestMapping(value="/groups/query", method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Object> queryUser(@RequestParam MultiValueMap<String, String> queryMap) {
+	public ResponseEntity<Object> queryGroups(@RequestParam MultiValueMap<String, String> queryMap) {
 		
 	
 		try {
