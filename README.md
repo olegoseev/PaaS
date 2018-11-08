@@ -2,6 +2,22 @@
 
 This is a simple web service that expose the users and groups information on UNIX-like systems. the service reading files /etc/passwd and /etc/group to obtain the information.
 
+## Create an executable jar out of the project
+
+The project was build using maven. In order to create a deployable jar, download the source files, navigate to the root folder of the project and execute maven comman
+
+```
+mvn clean package
+```
+
+Result of execution of the command above will be _**passwd-as-service-1.0.0.jar**_ file in _**target**_ direcotry
+
+To execute unit tests only, use command
+
+```
+mvn test
+```
+
 ## How to use it
 
 The service is a simple spring-boot rest application can be launched from the command line. Optionally desired server port can be passed as an argument
