@@ -109,33 +109,44 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 		
 		try {
 			
-			// Find a group which match to all given fields
-			if(!group.getName().isEmpty()) {
-				List<Group> _groups = groups.stream()
-						.filter(g -> g.getName().equals(group.getName()))
-						.collect(Collectors.toList());
-
-				groups = _groups;
-			}
-			if(group.getGid() != AppConfig.GID_NOT_DEFINED) {
-				List<Group> _groups = groups.stream()
-						.filter(g -> g.getGid() == group.getGid())
-						.collect(Collectors.toList());
-
-				groups = _groups;
-			}		
-			if(!group.getMembers().isEmpty()) {
-				List<Group> _groups = groups.stream()
-						.filter(g -> g.getMembers().containsAll(group.getMembers()))
-						.collect(Collectors.toList());
-				groups = _groups;
-			}
+			groups = applyFilter(group, groups);
 		} catch (NullPointerException e) {
 			LOG.error("Null pointer exception");
 			throw new PaaSApplicationException("Null pointer exception encountered");
 			
 		}
 		
+		return groups;
+	}
+
+	/**
+	 * Apply filter to the stream
+	 * @param group - object with fields that will be used as a filter
+	 * @param groups - list to filter to be applied
+	 * @return list of groups matching to given criteria
+	 */
+	private List<Group> applyFilter(Group group, List<Group> groups) {
+		// Find a group which match to all given fields
+		if(!group.getName().isEmpty()) {
+			List<Group> _groups = groups.stream()
+					.filter(g -> g.getName().equals(group.getName()))
+					.collect(Collectors.toList());
+
+			groups = _groups;
+		}
+		if(group.getGid() != AppConfig.GID_NOT_DEFINED) {
+			List<Group> _groups = groups.stream()
+					.filter(g -> g.getGid() == group.getGid())
+					.collect(Collectors.toList());
+
+			groups = _groups;
+		}		
+		if(!group.getMembers().isEmpty()) {
+			List<Group> _groups = groups.stream()
+					.filter(g -> g.getMembers().containsAll(group.getMembers()))
+					.collect(Collectors.toList());
+			groups = _groups;
+		}
 		return groups;
 	}
 	

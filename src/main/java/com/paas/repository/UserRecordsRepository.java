@@ -112,54 +112,65 @@ public class UserRecordsRepository implements BaseRepository<Integer, User> {
 		users = Utils.concatenateTwoLists(users, userList);
 		
 		try {
-			// Find a user which match to all given fields
-			if(!user.getName().isEmpty()) {
-				List<User> _users = users.stream()
-						.filter(u -> u.getName().equals(user.getName()))
-						.collect(Collectors.toList());
-				users = _users;
-			}
-			
-			if(user.getUid() != AppConfig.UID_NOT_DEFINED) {
-				List<User> _users = users.stream()
-						.filter(u -> u.getUid() == user.getUid())
-						.collect(Collectors.toList());
-				users = _users;
-			}
-			
-			if(user.getGid() != AppConfig.GID_NOT_DEFINED) {
-				List<User> _users = users.stream()
-						.filter(u -> u.getGid() == user.getGid())
-						.collect(Collectors.toList());
-				
-				users = _users;
-			}
-			
-			if(!user.getComment().isEmpty()) {
-				List<User> _users = users.stream()
-						.filter(u -> u.getComment().equals(user.getComment()))
-						.collect(Collectors.toList());
-				users = _users;
-			}
-			
-			if(!user.getHome().isEmpty()) {
-				List<User> _users = users.stream()
-						.filter(u -> u.getHome().equals(user.getHome()))
-						.collect(Collectors.toList());
-				users = _users;
-			}
-			
-			if(!user.getShell().isEmpty()) {
-				List<User> _users = users.stream()
-						.filter(u -> u.getShell().equals(user.getShell()))
-						.collect(Collectors.toList());
-				users = _users;
-			}
+			users = applyFilter(user, users);
 			
 		} catch (NullPointerException e) {
 			LOG.error("Null pointer exception");
 			throw new PaaSApplicationException("Null pointer exception encountered");
 			
+		}
+		return users;
+	}
+
+	/**
+	 * Apply filter to the stream
+	 * @param user - object with fields that will be used as a filter
+	 * @param  users - list to filter to be applied
+	 * @return list of users matching to given criteria
+	 */
+	private List<User> applyFilter(User user, List<User> users) {
+		// Find a user which match to all given fields
+		if(!user.getName().isEmpty()) {
+			List<User> _users = users.stream()
+					.filter(u -> u.getName().equals(user.getName()))
+					.collect(Collectors.toList());
+			users = _users;
+		}
+		
+		if(user.getUid() != AppConfig.UID_NOT_DEFINED) {
+			List<User> _users = users.stream()
+					.filter(u -> u.getUid() == user.getUid())
+					.collect(Collectors.toList());
+			users = _users;
+		}
+		
+		if(user.getGid() != AppConfig.GID_NOT_DEFINED) {
+			List<User> _users = users.stream()
+					.filter(u -> u.getGid() == user.getGid())
+					.collect(Collectors.toList());
+			
+			users = _users;
+		}
+		
+		if(!user.getComment().isEmpty()) {
+			List<User> _users = users.stream()
+					.filter(u -> u.getComment().equals(user.getComment()))
+					.collect(Collectors.toList());
+			users = _users;
+		}
+		
+		if(!user.getHome().isEmpty()) {
+			List<User> _users = users.stream()
+					.filter(u -> u.getHome().equals(user.getHome()))
+					.collect(Collectors.toList());
+			users = _users;
+		}
+		
+		if(!user.getShell().isEmpty()) {
+			List<User> _users = users.stream()
+					.filter(u -> u.getShell().equals(user.getShell()))
+					.collect(Collectors.toList());
+			users = _users;
 		}
 		return users;
 	}
