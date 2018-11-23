@@ -1,5 +1,5 @@
 package com.paas.repository.dao;
 
-public abstract class ReadDataFromFile {
+public abstract class ReadDataFromFile<T> {
 
 }
