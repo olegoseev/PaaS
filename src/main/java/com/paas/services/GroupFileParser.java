@@ -27,8 +27,7 @@ public class GroupFileParser implements FileParseService<Group> {
 	/**
 	 * etc/group file parser
 	 * 
-	 * @param path
-	 * 			  path to the file location
+	 * @param path to the file location
 	 * 
 	 * @return list of Group objects
 	 */
@@ -39,7 +38,6 @@ public class GroupFileParser implements FileParseService<Group> {
 		List<Group> groups = new ArrayList<>();
 
 		try {
-			// get list with file lines
 			List<String> lines = ReadFileInList.readFileInList(path);
 			
 			if (!lines.isEmpty()) {

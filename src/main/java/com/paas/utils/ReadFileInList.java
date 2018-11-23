@@ -25,8 +25,7 @@ public class ReadFileInList {
 	/**
 	 * Read whole file and returns a list with file lines
 	 * 
-	 * @param path
-	 * 				path to file
+	 * @param path to file
 	 */
 	public static List<String> readFileInList(Path path) throws PaaSApplicationException {
 		
@@ -35,7 +34,7 @@ public class ReadFileInList {
 		try {
 			lines = Files.readAllLines(path, StandardCharsets.US_ASCII);
 		} catch (IOException e) {
-			throw new PaaSApplicationException("Error to read file " + path.toString());
+			throw new PaaSApplicationException("IO exception occured during attempt to read file " + path.toString());
 		} catch (SecurityException se) {
 			throw new PaaSApplicationException("Security exception occured during attempt to read the file " + path.toString());
 		}

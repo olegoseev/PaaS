@@ -24,8 +24,7 @@ public class PasswdFileParser implements FileParseService<User> {
 	/**
 	 * etc/password file parser
 	 * 
-	 * @param path
-	 * 			  path to the file location
+	 * @param path to the file location
 	 * 
 	 * @return list of Group objects
 	 */

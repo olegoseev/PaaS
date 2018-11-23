@@ -16,8 +16,7 @@ public interface FileParseService <MODEL> {
     /**
      * Parse a file
      * 
-     * @param value
-     *            path to the file
+     * @param value path to the file
      * @return the list of objects
      */
 	List<MODEL> parse(Path path);
