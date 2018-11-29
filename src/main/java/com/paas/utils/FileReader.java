@@ -19,15 +19,14 @@ import java.util.List;
 
 import com.paas.PaaSApplicationException;
 
-//@Component
-public class ReadFileInList {
+public class FileReader {
 
 	/**
 	 * Read whole file and returns a list with file lines
 	 * 
 	 * @param path to file
 	 */
-	public static List<String> readFileInList(Path path) throws PaaSApplicationException {
+	public synchronized List<String> readFileInList(Path path) throws PaaSApplicationException {
 		
 		List<String> lines = Collections.emptyList();
 		

@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -34,6 +35,14 @@ public class TestReadFileInList {
 	
 	@Value("${dummy.file}")
 	private String dummyFile;
+	
+	private static	FileReader fileReader;
+	
+	@BeforeAll
+	public static void init() {
+		fileReader = new FileReader();
+	}
+	
 
 	@Test
 	public void testReadTileInList() {
@@ -44,7 +53,7 @@ public class TestReadFileInList {
 			
 			Path path = Paths.get(file.getAbsolutePath());
 			
-			List<String> list = ReadFileInList.readFileInList(path);
+			List<String> list = fileReader.readFileInList(path);
 			
 			assertEquals(list.size(), 10, "passwd file loading test");
 			
@@ -67,7 +76,7 @@ public class TestReadFileInList {
 					
 				Path path = Paths.get(file.getAbsolutePath());
 	
-				List<String> list = ReadFileInList.readFileInList(path);
+				List<String> list = fileReader.readFileInList(path);
 						
 			} catch (FileNotFoundException e) {
 	

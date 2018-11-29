@@ -9,18 +9,30 @@
 package com.paas.services;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.User;
-import com.paas.utils.ReadFileInList;
+import com.paas.utils.FileReader;
 
 @Service
 public class PasswdFileParser implements FileParseService<User> {
+	
+	private static FileReader fileReader;
 
+	@PostConstruct
+	private static void init() {
+		if(fileReader == null) {
+			fileReader = new FileReader();
+		}
+	}
+	
+		
 	/**
 	 * etc/password file parser
 	 * 
@@ -33,11 +45,11 @@ public class PasswdFileParser implements FileParseService<User> {
 		/**
 		 * List of User objects found in the file
 		 */
-		List<User> users = new ArrayList<>();
+		List<User> users = new LinkedList<>();
 		
 		try {
 			//  get list with file lines
-			List<String> lines = ReadFileInList.readFileInList(path);
+			List<String> lines = fileReader.readFileInList(path);
 			if (!lines.isEmpty()) {
 
 				// Parsing the file and store records in the list 

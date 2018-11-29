@@ -13,17 +13,29 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
-import com.paas.utils.ReadFileInList;
+import com.paas.utils.FileReader;
 
 @Service
 public class GroupFileParser implements FileParseService<Group> {
 
+	private static FileReader fileReader;
+
+	@PostConstruct
+	private static void init() {
+		if(fileReader == null) {
+			fileReader = new FileReader();
+		}
+	}
+	
 	/**
 	 * etc/group file parser
 	 * 
@@ -35,10 +47,10 @@ public class GroupFileParser implements FileParseService<Group> {
 	public List<Group> parse(Path path) throws PaaSApplicationException {
 
 		// List of User objects found in the file
-		List<Group> groups = new ArrayList<>();
+		List<Group> groups = new LinkedList<>();
 
 		try {
-			List<String> lines = ReadFileInList.readFileInList(path);
+			List<String> lines = fileReader.readFileInList(path);
 			
 			if (!lines.isEmpty()) {
 		
