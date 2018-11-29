@@ -48,16 +48,14 @@ public class GroupFileParser implements FileParseService<Group> {
 		// List of User objects found in the file
 		List<Group> groups = Collections.emptyList();
 
-		try {
-			List<String> records = getRecords(path);
-			
-			if (!records.isEmpty()) {
-				groups = parseRecords(records);
-			}
-		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new PaaSApplicationException(GroupFileParser.class, "File " + path.toString() + " parse error. Array index is out of bounds");
+		List<String> records = getRecords(path);
+		
+		if (records.isEmpty()) {
+			return Collections.emptyList();
 		}
-	
+		
+		groups = parseRecords(records);
+
 		return groups;
 	}
 
@@ -87,6 +85,8 @@ public class GroupFileParser implements FileParseService<Group> {
 			throw new PaaSApplicationException(GroupFileParser.class, "Regular expression syntax error");
 		} catch (NumberFormatException ne) {
 			throw new PaaSApplicationException(GroupFileParser.class, "Fail to parse group id");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new PaaSApplicationException(GroupFileParser.class, "File record parse error. Array index is out of bounds");
 		}
 
 		return groups;
