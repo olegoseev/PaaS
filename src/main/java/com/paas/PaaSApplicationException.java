@@ -20,7 +20,6 @@ public class PaaSApplicationException extends RuntimeException {
 	}
 	
 	public <T> PaaSApplicationException(Class<T> aClass, String message) {
-		super(message);
 		Logger LOG = LoggerFactory.getLogger(aClass);
 		errorMessage = message;
 		LOG.error(message);
