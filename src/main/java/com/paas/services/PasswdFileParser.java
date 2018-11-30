@@ -56,7 +56,7 @@ public class PasswdFileParser implements FileParseService<User> {
 		return users;
 	}
 	
-	private List<User> parseRecords(List<String> records) throws PaaSApplicationException {
+	public List<User> parseRecords(List<String> records) throws PaaSApplicationException {
 		List<User> users = new LinkedList<>();
 		
 		try {
