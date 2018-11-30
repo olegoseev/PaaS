@@ -41,7 +41,7 @@ public class TestUserRestController {
 		this.mockMvc.perform(get("/users/5"))
 					.andExpect(status().isOk())
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
-					.andExpect(content().json("{'status': 'OK','success':'OK','data':{'name':'games','uid':5,'gid':60,'comment':'games','home':'/usr/games'}}"));
+					.andExpect(content().json("{'status': 'OK','success':'OK','data':{'name':'supergames','uid':5,'gid':60,'comment':'games','home':'/usr/games'}}"));
 	}
 
 	@Test

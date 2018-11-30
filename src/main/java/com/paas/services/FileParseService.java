@@ -9,7 +9,6 @@
  */
 package com.paas.services;
 
-import java.nio.file.Path;
 import java.util.List;
 
 public interface FileParseService <MODEL> {
@@ -19,5 +18,5 @@ public interface FileParseService <MODEL> {
      * @param value path to the file
      * @return the list of objects
      */
-	List<MODEL> parse(Path path);
+	List<MODEL> parseRecords(List<String> records);
 }

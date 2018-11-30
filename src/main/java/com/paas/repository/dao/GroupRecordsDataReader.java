@@ -8,20 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.paas.model.User;
-import com.paas.services.PasswdFileParser;
+import com.paas.model.Group;
+import com.paas.services.GroupFileParser;
 
 @Service
-public class UserRecordsDataReader extends DataReader<List<User>> {
+public class GroupRecordsDataReader extends DataReader<List<Group>> {
 
 	// value for the string is in the property file
-	@Value("${user.records}")
+	@Value("${group.records}")
 	private String path;
 	
-
 	@Autowired
-	private PasswdFileParser parser;
-
+	GroupFileParser parser;
+	
 	@PostConstruct
 	public void init() {
 		pathToFile = path;
@@ -29,7 +28,8 @@ public class UserRecordsDataReader extends DataReader<List<User>> {
 	}
 	
 	@Override
-	List<User> getRecords() {
+	List<Group> getRecords() {
 		return parser.parseRecords(records);
 	}
+
 }

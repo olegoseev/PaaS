@@ -26,7 +26,7 @@ public class FileReader {
 	 * 
 	 * @param path to file
 	 */
-	public synchronized List<String> readFileInList(Path path) throws PaaSApplicationException {
+	public List<String> readFileInList(Path path) throws PaaSApplicationException {
 		
 		List<String> lines = Collections.emptyList();
 		

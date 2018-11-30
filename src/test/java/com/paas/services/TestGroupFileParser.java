@@ -1,9 +1,6 @@
 package com.paas.services;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -16,94 +13,73 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.ResourceUtils;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
+import com.paas.utils.FileReader;
+import com.paas.utils.StringToPath;
 
 //@RunWith(JUnitPlatform.class)
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-@TestPropertySource(properties = {"group.records = src/test/resources/group", "dummy.file = src/test/resources/missing"})
+@TestPropertySource(properties = { "group.records = src/test/resources/group",
+		"dummy.file = src/test/resources/missing" })
 public class TestGroupFileParser {
 
 	@Value("${group.records}")
 	private String groupFile;
-	
+
 	@Value("${dummy.file}")
 	private String dummyFile;
-	
-	private Path getPathToFile() throws FileNotFoundException {
-		
-		File file = ResourceUtils.getFile(groupFile);
-		
-		Path path = Paths.get(file.getAbsolutePath());
-		
-		return path;
-	}
-	
+
 	@Test
 	public void testGetMembers() {
-		
-		GroupFileParser parser = new GroupFileParser();
-		
-		try {
 
-			Path path = getPathToFile();
-	
-			List<Group> list = parser.parse(path);
-			
-			Assertions.assertEquals(list.get(1).getMembers().size(), 3, "daemon:x:1:member1,member2,member3 group member test");
-			
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		}  catch (PaaSApplicationException e) {
-			
-			e.printStackTrace();
-		}
+		GroupFileParser parser = new GroupFileParser();
+
+		Path path = StringToPath.getPath(groupFile);
+
+		FileReader fr = new FileReader();
+
+		List<String> records = fr.readFileInList(path);
+
+		List<Group> list = parser.parseRecords(records);
+
+		Assertions.assertEquals(list.get(1).getMembers().size(), 3,
+				"daemon:x:1:member1,member2,member3 group member test");
+
 	}
-	
+
 	@Test
 	public void testParse() {
-		
+
 		GroupFileParser parser = new GroupFileParser();
-		
-		try {
-			
-			Path path = getPathToFile();
-	
-			List<Group> list = parser.parse(path);
-			
-			Assertions.assertEquals(list.size(), 7, "group file loading test");
-			
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		}  catch (PaaSApplicationException e) {
-			
-			e.printStackTrace();
-		}
+
+		Path path = StringToPath.getPath(groupFile);
+
+		FileReader fr = new FileReader();
+
+		List<String> records = fr.readFileInList(path);
+
+		List<Group> list = parser.parseRecords(records);
+
+		Assertions.assertEquals(list.size(), 7, "group file loading test");
 	}
-	
+
 	@SuppressWarnings("unused")
 	@Test
 	public void fileParseErrorExceptionThrown() {
-			
+
 		Assertions.assertThrows(PaaSApplicationException.class, () -> {
 			GroupFileParser parser = new GroupFileParser();
+			Path path = StringToPath.getPath(dummyFile);
 
-			try {
-					File file = ResourceUtils.getFile(dummyFile);
-					Path path = Paths.get(file.getAbsolutePath());
-					List<Group> list = parser.parse(path);
-					
-			} catch (FileNotFoundException e) {
+			FileReader fr = new FileReader();
 
-					e.printStackTrace();
-			}
+			List<String> records = fr.readFileInList(path);
+			List<Group> list = parser.parseRecords(records);
 		});
 	}
 }

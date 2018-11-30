@@ -1,79 +1,24 @@
 package com.paas.repository;
 
-import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.paas.PaaSApplicationException;
 import com.paas.config.AppConfig;
 import com.paas.model.User;
-import com.paas.services.PasswdFileParser;
-import com.paas.utils.Utils;
+import com.paas.repository.dao.UserRecordsDataReader;
 
 @Repository
 public class UserRecordsRepository implements BaseRepository<Integer, User> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserRecordsRepository.class);
-
-	/**
-	 * Users records will be stored in LinkedList. in case if needed to store a
-	 * numerous of records probably would be better to store them in database
-	 */
-	private List<User> userList = new ArrayList<>();
-
-	// path to file
-	@Value("${user.records}")
-	private String userFile;
 
 	@Autowired
-	PasswdFileParser parser;
-
-	/**
-	 * Update user records
-	 */
-	public void updateRepository() throws PaaSApplicationException {
-
-		// Clear the list before updating it
-		if (!userList.isEmpty()) {
-			userList.clear();
-		}
-
-		try {
-			// Converting path string to path
-			Path path = Paths.get(userFile);
-
-			// parse file and fill the list with new data
-			userList = parser.parse(path);
-
-		} catch (InvalidPathException e) {
-			LOG.error("Failed to resolve path", e);
-			throw new PaaSApplicationException("Invalid Path Exception");
-		} catch (UnsupportedOperationException e) {
-			LOG.error(e.toString());
-			throw new PaaSApplicationException("Unsupported Operation Exception");
-		} catch (NullPointerException e) {
-			LOG.error(e.toString());
-			throw new PaaSApplicationException("NullPointer Exception");
-		} catch (ClassCastException e) {
-			LOG.error(e.toString());
-			throw new PaaSApplicationException("Class Cast Exception");
-		} catch (IllegalArgumentException e) {
-			LOG.error(e.toString());
-			throw new PaaSApplicationException("Illegal Argument Exception");
-		}
-	}
-
+	UserRecordsDataReader reader;
+	
 	/**
 	 * All users
 	 * 
@@ -81,10 +26,7 @@ public class UserRecordsRepository implements BaseRepository<Integer, User> {
 	 */
 	@Override
 	public List<User> findAll() {
-
-		updateRepository();
-
-		return userList;
+		return reader.readData();
 	}
 
 	/**
@@ -97,19 +39,12 @@ public class UserRecordsRepository implements BaseRepository<Integer, User> {
 	@Override
 	public List<User> findAny(User user) throws PaaSApplicationException {
 
-		updateRepository();
-
-		List<User> users = Collections.emptyList();
-
-		users = Utils.concatenateTwoLists(users, userList);
+		List<User> users = reader.readData();
 
 		try {
 			users = applyFilter(user, users);
-
 		} catch (NullPointerException e) {
-			LOG.error("Null pointer exception");
-			throw new PaaSApplicationException("Null pointer exception encountered");
-
+			throw new PaaSApplicationException(UserRecordsRepository.class, "Null pointer exception encountered");
 		}
 		return users;
 	}
@@ -170,9 +105,9 @@ public class UserRecordsRepository implements BaseRepository<Integer, User> {
 	@Override
 	public User findBy(Integer id) throws PaaSApplicationException {
 
-		updateRepository();
+		List<User> users = reader.readData();
 
-		Optional<User> user = userList.stream().filter(u -> u.getUid() == id).findFirst();
+		Optional<User> user = users.stream().filter(u -> u.getUid() == id).findFirst();
 
 		// Make sure something found
 		if (user.isPresent()) {

@@ -8,53 +8,17 @@
  */
 package com.paas.services;
 
-import java.nio.file.Path;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.User;
-import com.paas.utils.FileReader;
 
 @Service
 public class PasswdFileParser implements FileParseService<User> {
-	
-	private static FileReader fileReader;
-
-	@PostConstruct
-	private static void init() {
-		if(fileReader == null) {
-			fileReader = new FileReader();
-		}
-	}
-	
-		
-	/**
-	 * etc/password file parser
-	 * 
-	 * @param path to the file location
-	 * 
-	 * @return list of Group objects
-	 */
-	@Override
-	public List<User> parse(Path path) throws PaaSApplicationException {
-		
-		List<String> records = getRecords(path);
-		
-		if (records.isEmpty()) {
-			return Collections.emptyList();
-		}
-		
-		List<User> users = parseRecords(records);
-		
-		return users;
-	}
 	
 	public List<User> parseRecords(List<String> records) throws PaaSApplicationException {
 		List<User> users = new LinkedList<>();
@@ -83,10 +47,4 @@ public class PasswdFileParser implements FileParseService<User> {
 		
 		return users;
 	}
-	
-	private List<String> getRecords(Path path) {
-		List<String> records = fileReader.readFileInList(path);
-		return records;
-	}
-
 }

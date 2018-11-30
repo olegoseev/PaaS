@@ -9,54 +9,21 @@
  */
 package com.paas.services;
 
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.stereotype.Service;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
-import com.paas.utils.FileReader;
 
 @Service
 public class GroupFileParser implements FileParseService<Group> {
 
-	private static FileReader fileReader;
-
-	@PostConstruct
-	private static void init() {
-		if(fileReader == null) {
-			fileReader = new FileReader();
-		}
-	}
-	
-	/**
-	 * etc/group file parser
-	 * 
-	 * @param path to the file location
-	 * @return list of Group objects
-	 */
-	@Override
-	public List<Group> parse(Path path) throws PaaSApplicationException {
-
-		List<String> records = getRecords(path);
-		
-		if (records.isEmpty()) {
-			return Collections.emptyList();
-		}
-		
-		List<Group> groups = parseRecords(records);
-
-		return groups;
-	}
-
-	private List<Group> parseRecords(List<String> records) throws PaaSApplicationException {
+	public List<Group> parseRecords(List<String> records) throws PaaSApplicationException {
 		
 		List<Group> groups = new LinkedList<>();
 		
@@ -89,13 +56,7 @@ public class GroupFileParser implements FileParseService<Group> {
 		return groups;
 	}
 
-	private List<String> getRecords(Path path) {
-		List<String> records = fileReader.readFileInList(path);
-		return records;
-	}
-	
 	/**
-	 * 
 	 * @param record of a group members. members separated by ","
 	 * @return List of string objects
 	 */

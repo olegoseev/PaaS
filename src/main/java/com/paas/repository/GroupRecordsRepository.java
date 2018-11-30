@@ -1,91 +1,35 @@
 package com.paas.repository;
 
-import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.paas.PaaSApplicationException;
 import com.paas.config.AppConfig;
 import com.paas.model.Group;
 import com.paas.model.User;
-import com.paas.services.GroupFileParser;
+import com.paas.repository.dao.GroupRecordsDataReader;
 import com.paas.utils.Utils;
 
 @Repository
 public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(GroupRecordsRepository.class);
-	/**
-	 * Users records will be stored in LinkedList.
-	 * in case if needed to store a numerous of records
-	 * probably would be better to store them in database
-	 */
-	private static List<Group> groupList = new ArrayList<>();
-	
-	// Path to the file
-	@Value("${group.records}")
-	private String groupFile;
-	
+
 	@Autowired
-	GroupFileParser parser;
-	
-	public void updateRepository() throws PaaSApplicationException {
-
-		 // Clear the list before updating it
-		if(!groupList.isEmpty()) {
-			groupList.clear();
-		}
-		
-		try {
-			 // Converting path string to path
-			Path path = Paths.get(groupFile);
-
-			 // Fill the list with new data
-			groupList.addAll(parser.parse(path));
-			
-		} catch (InvalidPathException e) {
-			LOG.error("Failed to resolve path", e);
-			throw new PaaSApplicationException("Invalid Path Exception");
-		} catch (UnsupportedOperationException e) {
-			LOG.error(e.toString());
-			throw new PaaSApplicationException("Unsupported Operation Exception");
-		} catch (NullPointerException e) {
-			LOG.error(e.toString());
-			throw new PaaSApplicationException("NullPointer Exception");
-		} catch (ClassCastException e) {
-			LOG.error(e.toString());
-			throw new PaaSApplicationException("Class Cast Exception");
-		} catch (IllegalArgumentException e) {
-			LOG.error(e.toString());
-			throw new PaaSApplicationException("Illegal Argument Exception");
-		}
-	}
+	GroupRecordsDataReader reader;
 	
     /**
      * All groups
      * 
-     * @return 
-     * 			list of Group objects if found
+     * @return list of Group objects if found
      * 			an empty list if not
      */
 	@Override
 	public List<Group> findAll() throws PaaSApplicationException {
-		
-		updateRepository();
-		
-		// Simply return the list
-		return groupList;
+		return reader.readData();
 	}
 
     /**
@@ -101,18 +45,13 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 	@Override
 	public List<Group> findAny(Group group) throws PaaSApplicationException {
 		
-		updateRepository();
-		
-		List<Group> groups = Collections.emptyList();
-		
-		groups = Utils.concatenateTwoLists(groups, groupList);
+		List<Group> groups = reader.readData();
 		
 		try {
 			
 			groups = applyFilter(group, groups);
 		} catch (NullPointerException e) {
-			LOG.error("Null pointer exception");
-			throw new PaaSApplicationException("Null pointer exception encountered");
+			throw new PaaSApplicationException(GroupRecordsRepository.class, "Null pointer exception encountered");
 			
 		}
 		
@@ -153,19 +92,17 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
     /**
      * Find group by Id
      * 
-     * @param id
-     * 			group Id
+     * @param group Id
      *            
-     * @return 
-     * 			Group object if found
+     * @return Group object if found
      * 			null if not found
      */
 	@Override
 	public Group findBy(Integer id) throws PaaSApplicationException {
+
+		List<Group> groups = reader.readData();
 		
-		updateRepository();
-		
-		Optional<Group> group = groupList.stream()
+		Optional<Group> group = groups.stream()
 									.filter(g -> g.getGid() == id)
 									.findFirst();
 
@@ -179,20 +116,20 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 	
 	public List<Group> findAllGroupsForUser(User user) throws PaaSApplicationException {
 		
-		updateRepository();
+		List<Group> groups = reader.readData();
 		
 		String name = user.getName();
 		
-		List<Group> groupA = groupList.stream()
+		List<Group> groupA = groups.stream()
 										.filter(g -> (g.getMembers().contains(name)))
 										.collect(Collectors.toList());
 		
-		List<Group> groupB = groupList.stream()
+		List<Group> groupB = groups.stream()
 										.filter(g -> (g.getName().equals(name)))
 										.collect(Collectors.toList());
 		
-		List<Group> groups = Utils.concatenateTwoLists(groupA, groupB);
+		List<Group> combinedGroups = Utils.concatenateTwoLists(groupA, groupB);
 		
-		return groups;
+		return combinedGroups;
 	}
 }

@@ -15,7 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.paas.PaaSApplicationException;
 import com.paas.model.User;
 
 @RunWith(SpringRunner.class)
@@ -36,18 +35,8 @@ public class TestUserRecordsDataReader {
 	
 	@Test
 	public void testReadData() {
-		ReflectionTestUtils.setField(dataReader, "pathToFile", realFile);
+		ReflectionTestUtils.setField(dataReader, "path", realFile);
 		List<User> records = dataReader.readData();
 		Assertions.assertEquals(10, records.size(), "read user records from file");
-	}
-
-	@SuppressWarnings("unused")
-	@Test
-	public void testFindByExceptionThrown() {
-		Assertions.assertThrows(PaaSApplicationException.class, () -> {
-			ReflectionTestUtils.setField(dataReader, "pathToFile", dummyFile);
-			UserRecordsDataReader.needToReload.set(true);
-			List<User> records = dataReader.readData();
-		});
 	}
 }
