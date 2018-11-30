@@ -45,16 +45,13 @@ public class GroupFileParser implements FileParseService<Group> {
 	@Override
 	public List<Group> parse(Path path) throws PaaSApplicationException {
 
-		// List of User objects found in the file
-		List<Group> groups = Collections.emptyList();
-
 		List<String> records = getRecords(path);
 		
 		if (records.isEmpty()) {
 			return Collections.emptyList();
 		}
 		
-		groups = parseRecords(records);
+		List<Group> groups = parseRecords(records);
 
 		return groups;
 	}
@@ -93,8 +90,8 @@ public class GroupFileParser implements FileParseService<Group> {
 	}
 
 	private List<String> getRecords(Path path) {
-		List<String> lines = fileReader.readFileInList(path);
-		return lines;
+		List<String> records = fileReader.readFileInList(path);
+		return records;
 	}
 	
 	/**
