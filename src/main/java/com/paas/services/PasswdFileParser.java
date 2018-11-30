@@ -9,8 +9,10 @@
 package com.paas.services;
 
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.PatternSyntaxException;
 
 import javax.annotation.PostConstruct;
 
@@ -42,35 +44,49 @@ public class PasswdFileParser implements FileParseService<User> {
 	 */
 	@Override
 	public List<User> parse(Path path) throws PaaSApplicationException {
-		/**
-		 * List of User objects found in the file
-		 */
+		
+		List<String> records = getRecords(path);
+		
+		if (records.isEmpty()) {
+			return Collections.emptyList();
+		}
+		
+		List<User> users = parseRecords(records);
+		
+		return users;
+	}
+	
+	private List<User> parseRecords(List<String> records) throws PaaSApplicationException {
 		List<User> users = new LinkedList<>();
 		
 		try {
-			//  get list with file lines
-			List<String> lines = fileReader.readFileInList(path);
-			if (!lines.isEmpty()) {
-
-				// Parsing the file and store records in the list 
-				for(String line : lines) {
-					
-					String[] parts = line.split(":");
-					User user = new User();
-					user.setName(parts[0]);
-					user.setUid(Integer.parseInt(parts[2]));
-					user.setGid(Integer.parseInt(parts[3]));
-					user.setComment(parts[4]);
-					user.setHome(parts[5]);
-					user.setShell(parts[6]);
-					users.add(user);
-				}
+			// Parsing the file and store records in the list 
+			for(String record : records) {
+				
+				String[] parts = record.split(":");
+				User user = new User();
+				user.setName(parts[0]);
+				user.setUid(Integer.parseInt(parts[2]));
+				user.setGid(Integer.parseInt(parts[3]));
+				user.setComment(parts[4]);
+				user.setHome(parts[5]);
+				user.setShell(parts[6]);
+				users.add(user);
 			}
+		} catch (PatternSyntaxException pe) {
+			throw new PaaSApplicationException(PasswdFileParser.class, "Regular expression syntax error");
+		} catch (NumberFormatException ne) {
+			throw new PaaSApplicationException(PasswdFileParser.class, "Fail to parse group id");
 		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new PaaSApplicationException("File " + path.toString() + " error. Array index is out of bounds");
+			throw new PaaSApplicationException(PasswdFileParser.class, "File record parse error. Array index is out of bounds");
 		}
 		
 		return users;
+	}
+	
+	private List<String> getRecords(Path path) {
+		List<String> records = fileReader.readFileInList(path);
+		return records;
 	}
 
 }
