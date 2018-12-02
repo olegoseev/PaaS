@@ -8,6 +8,7 @@
  */
 package com.paas.services;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
@@ -19,14 +20,18 @@ import com.paas.model.User;
 
 @Service
 public class PasswdFileParser implements FileParseService<User> {
-	
+
 	public List<User> parseRecords(List<String> records) throws PaaSApplicationException {
-		List<User> users = new LinkedList<>();
 		
+		if (records.isEmpty()) {
+			return Collections.emptyList();
+		}
+		List<User> users = new LinkedList<>();
+
 		try {
-			// Parsing the file and store records in the list 
-			for(String record : records) {
-				
+			// Parsing the file and store records in the list
+			for (String record : records) {
+
 				String[] parts = record.split(":");
 				User user = new User();
 				user.setName(parts[0]);
@@ -42,9 +47,9 @@ public class PasswdFileParser implements FileParseService<User> {
 		} catch (NumberFormatException ne) {
 			throw new PaaSApplicationException(PasswdFileParser.class, "Fail to parse group id");
 		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new PaaSApplicationException(PasswdFileParser.class, "File record parse error. Array index is out of bounds");
+			throw new PaaSApplicationException(PasswdFileParser.class,
+					"File record parse error. Array index is out of bounds");
 		}
-		
 		return users;
 	}
 }

@@ -37,7 +37,6 @@ public class FileReader {
 		} catch (SecurityException se) {
 			throw new PaaSApplicationException("Security exception occured during attempt to read the file " + path.toString());
 		}
-		
 		return lines;
 	}
 }

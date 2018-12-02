@@ -12,8 +12,6 @@ package com.paas.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.paas.config.AppConfig;
-
 
 public class User implements Serializable {
 	
@@ -38,12 +36,12 @@ public class User implements Serializable {
 	private String shell;
 	
 	public User() {
-		name	= AppConfig.EMPTY_STRING;
-		uid		= AppConfig.UID_NOT_DEFINED;
-		gid		= AppConfig.GID_NOT_DEFINED;
-		comment = AppConfig.EMPTY_STRING;
-		home	= AppConfig.EMPTY_STRING;
-		shell	= AppConfig.EMPTY_STRING;
+		name	= ModelDefaults.EMPTY_STRING;
+		uid		= ModelDefaults.UID_NOT_DEFINED;
+		gid		= ModelDefaults.GID_NOT_DEFINED;
+		comment = ModelDefaults.EMPTY_STRING;
+		home	= ModelDefaults.EMPTY_STRING;
+		shell	= ModelDefaults.EMPTY_STRING;
 	}
 
 	public String getName() {

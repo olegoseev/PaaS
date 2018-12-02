@@ -27,61 +27,47 @@ import com.paas.PaaSApplicationException;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-@TestPropertySource(properties = {"real.file = src/test/resources/passwd", "dummy.file = src/test/resources/missing"})
+@TestPropertySource(properties = { "real.file = src/test/resources/passwd", "dummy.file = src/test/resources/missing" })
 public class TestReadFileInList {
-	
+
 	@Value("${real.file}")
 	private String realFile;
-	
+
 	@Value("${dummy.file}")
 	private String dummyFile;
-	
-	private static	FileReader fileReader;
-	
+
+	private static FileReader fileReader;
+
 	@BeforeAll
 	public static void init() {
 		fileReader = new FileReader();
 	}
-	
 
 	@Test
 	public void testReadTileInList() {
-		
+
 		try {
 
 			File file = ResourceUtils.getFile(realFile);
-			
 			Path path = Paths.get(file.getAbsolutePath());
-			
 			List<String> list = fileReader.readFileInList(path);
-			
+
 			assertEquals(list.size(), 10, "passwd file loading test");
-			
 		} catch (FileNotFoundException e) {
-			
 			e.printStackTrace();
 		} catch (PaaSApplicationException e) {
-			
 			e.printStackTrace();
-		} 
+		}
 	}
-	
+
 	@SuppressWarnings("unused")
 	@Test
 	public void fileReadErrorExceptionThrown() {
-			
+
 		Assertions.assertThrows(PaaSApplicationException.class, () -> {
-			try {
-				File file = ResourceUtils.getFile(dummyFile);
-					
-				Path path = Paths.get(file.getAbsolutePath());
-	
-				List<String> list = fileReader.readFileInList(path);
-						
-			} catch (FileNotFoundException e) {
-	
-				e.printStackTrace();
-			}
+			File file = ResourceUtils.getFile(dummyFile);
+			Path path = Paths.get(file.getAbsolutePath());
+			List<String> list = fileReader.readFileInList(path);
 		});
-	}	
+	}
 }

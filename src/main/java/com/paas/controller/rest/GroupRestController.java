@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paas.PaaSApplicationException;
-import com.paas.config.AppConfig;
 import com.paas.model.Group;
+import com.paas.model.ModelDefaults;
 import com.paas.repository.GroupRecordsRepository;
 import com.paas.utils.AppResponse;
 
@@ -94,12 +94,12 @@ public class GroupRestController {
 		
 		try {
 			
-			group.setName(map.containsKey(AppConfig.GROUP_NAME) ? 
-					(String)map.get(AppConfig.GROUP_NAME).get(0) : AppConfig.EMPTY_STRING);
-			group.setGid(map.containsKey(AppConfig.GROUP_GID) ? 
-					Integer.parseInt((String)map.get(AppConfig.GROUP_GID).get(0)) : AppConfig.GID_NOT_DEFINED);
-			group.setMembers(map.containsKey(AppConfig.GROUP_MEMBER) ? 
-					map.get(AppConfig.GROUP_MEMBER) : Collections.emptyList());
+			group.setName(map.containsKey(ModelDefaults.GROUP_NAME) ? 
+					(String)map.get(ModelDefaults.GROUP_NAME).get(0) : ModelDefaults.EMPTY_STRING);
+			group.setGid(map.containsKey(ModelDefaults.GROUP_GID) ? 
+					Integer.parseInt((String)map.get(ModelDefaults.GROUP_GID).get(0)) : ModelDefaults.GID_NOT_DEFINED);
+			group.setMembers(map.containsKey(ModelDefaults.GROUP_MEMBER) ? 
+					map.get(ModelDefaults.GROUP_MEMBER) : Collections.emptyList());
 			
 		} catch (NullPointerException ne) {
 			LOG.error(ne.getMessage());

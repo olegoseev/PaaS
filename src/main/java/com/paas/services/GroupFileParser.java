@@ -25,6 +25,10 @@ public class GroupFileParser implements FileParseService<Group> {
 
 	public List<Group> parseRecords(List<String> records) throws PaaSApplicationException {
 		
+		if (records.isEmpty()) {
+			return Collections.emptyList();
+		}
+		
 		List<Group> groups = new LinkedList<>();
 		
 		try {

@@ -1,9 +1,9 @@
-package com.paas.config;
+package com.paas.model;
 
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppConfig {
+public class ModelDefaults {
 
 	public static final String USER_NAME = "name";
 	public static final String USER_UID = "uid";

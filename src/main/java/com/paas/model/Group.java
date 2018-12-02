@@ -15,8 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import com.paas.config.AppConfig;
-
 
 public class Group implements Serializable {
 	
@@ -32,8 +30,8 @@ public class Group implements Serializable {
 	private List<String> members;
 	
 	public Group() {
-		name = AppConfig.EMPTY_STRING;
-		gid  = AppConfig.GID_NOT_DEFINED;
+		name = ModelDefaults.EMPTY_STRING;
+		gid  = ModelDefaults.GID_NOT_DEFINED;
 		members = Collections.emptyList();
 	}
 
