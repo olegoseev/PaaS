@@ -11,12 +11,11 @@ public class ModelDefaults {
 	public static final String USER_COMMENT = "comment";
 	public static final String USER_HOME = "home";
 	public static final String USER_SHELL = "shell";
-	
-	
+
 	public static final String GROUP_NAME = "name";
 	public static final String GROUP_GID = "gid";
 	public static final String GROUP_MEMBER = "member";
-	
+
 	public static final String EMPTY_STRING = "";
 
 	public static final int UID_NOT_DEFINED = -1;

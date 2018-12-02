@@ -20,30 +20,24 @@ public class Utils {
 	/**
 	 * Concatenate two lists
 	 * 
-	 * @param list1
-	 * 				List object
-	 * @param list2
-	 * 				List object
-	 * @return
-	 * 		  List object containing elements from list1 and list2 
+	 * @param list1 List object
+	 * @param list2 List object
+	 * @return List object containing elements from list1 and list2
 	 */
-	public static <T> List<T> concatenateTwoLists (List<T> list1, List<T> list2) {
-		
-		if(list1.isEmpty()) {
+	public static <T> List<T> concatenateTwoLists(List<T> list1, List<T> list2) {
+
+		if (list1.isEmpty()) {
 			return newListFromList(list2);
 		}
-		
-		if(list2.isEmpty()) {
+
+		if (list2.isEmpty()) {
 			return newListFromList(list1);
 		}
-		
-		List<T> list = Stream.of(list1, list2)
-						.flatMap(List::stream)
-						.distinct()
-						.collect(Collectors.toList());
+
+		List<T> list = Stream.of(list1, list2).flatMap(List::stream).distinct().collect(Collectors.toList());
 		return list;
 	}
-	
+
 	private static <T> List<T> newListFromList(List<T> list) {
 		List<T> al = new ArrayList<>();
 		al.addAll(list);

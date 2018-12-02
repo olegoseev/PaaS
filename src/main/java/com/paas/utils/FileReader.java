@@ -27,18 +27,17 @@ public class FileReader {
 	 * @param path to file
 	 */
 	public List<String> readFileInList(Path path) throws PaaSApplicationException {
-		
+
 		List<String> lines = Collections.emptyList();
-		
+
 		try {
 			lines = Files.readAllLines(path, StandardCharsets.US_ASCII);
 		} catch (IOException e) {
 			throw new PaaSApplicationException("IO exception occured during attempt to read file " + path.toString());
 		} catch (SecurityException se) {
-			throw new PaaSApplicationException("Security exception occured during attempt to read the file " + path.toString());
+			throw new PaaSApplicationException(
+					"Security exception occured during attempt to read the file " + path.toString());
 		}
 		return lines;
 	}
 }
-
-

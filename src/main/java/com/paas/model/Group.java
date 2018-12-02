@@ -15,23 +15,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-
 public class Group implements Serializable {
-	
+
 	private static final long serialVersionUID = 3000633563828136079L;
 
 	// Group name
 	private String name;
-	
+
 	// Group Id
 	private int gid;
-	
+
 	// Group members
 	private List<String> members;
-	
+
 	public Group() {
 		name = ModelDefaults.EMPTY_STRING;
-		gid  = ModelDefaults.GID_NOT_DEFINED;
+		gid = ModelDefaults.GID_NOT_DEFINED;
 		members = Collections.emptyList();
 	}
 
@@ -51,7 +50,6 @@ public class Group implements Serializable {
 		this.gid = gid;
 	}
 
-
 	public List<String> getMembers() {
 		return members;
 	}
@@ -59,7 +57,6 @@ public class Group implements Serializable {
 	public void setMembers(List<String> members) {
 		this.members = members;
 	}
-
 
 	@Override
 	public int hashCode() {

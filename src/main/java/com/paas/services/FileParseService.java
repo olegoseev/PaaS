@@ -11,12 +11,12 @@ package com.paas.services;
 
 import java.util.List;
 
-public interface FileParseService <MODEL> {
-    /**
-     * Parse a file
-     * 
-     * @param value path to the file
-     * @return the list of objects
-     */
+public interface FileParseService<MODEL> {
+	/**
+	 * Parse a file
+	 * 
+	 * @param value path to the file
+	 * @return the list of objects
+	 */
 	List<MODEL> parseRecords(List<String> records);
 }

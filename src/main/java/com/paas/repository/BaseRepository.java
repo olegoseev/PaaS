@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface BaseRepository<PK, MODEL> {
 	public List<MODEL> findAll();
+
 	public List<MODEL> findAny(MODEL model);
+
 	MODEL findBy(PK pk);
 }

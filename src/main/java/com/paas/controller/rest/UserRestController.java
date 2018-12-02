@@ -160,25 +160,25 @@ public class UserRestController {
 
 		try {
 			User user = new User();
-			
+
 			String name = extractUserName(map);
 			user.setName(name);
-			
+
 			int uid = extractUserId(map);
 			user.setUid(uid);
-			
+
 			int gid = extractUserGroupId(map);
 			user.setGid(gid);
-			
+
 			String comments = extractUserComments(map);
 			user.setComment(comments);
-			
+
 			String home = extractUserHomeDir(map);
 			user.setHome(home);
-			
+
 			String shell = extractUserShell(map);
 			user.setShell(shell);
-			
+
 			return user;
 
 		} catch (NullPointerException ne) {
@@ -202,17 +202,17 @@ public class UserRestController {
 		return map.containsKey(ModelDefaults.USER_GID) ? Integer.parseInt((String) map.get(ModelDefaults.USER_GID))
 				: ModelDefaults.GID_NOT_DEFINED;
 	}
-	
+
 	private String extractUserComments(Map<String, String> map) {
 		return map.containsKey(ModelDefaults.USER_COMMENT) ? (String) map.get(ModelDefaults.USER_COMMENT)
 				: ModelDefaults.EMPTY_STRING;
 	}
-	
+
 	private String extractUserHomeDir(Map<String, String> map) {
 		return map.containsKey(ModelDefaults.USER_HOME) ? (String) map.get(ModelDefaults.USER_HOME)
 				: ModelDefaults.EMPTY_STRING;
 	}
-	
+
 	private String extractUserShell(Map<String, String> map) {
 		return map.containsKey(ModelDefaults.USER_SHELL) ? (String) map.get(ModelDefaults.USER_SHELL)
 				: ModelDefaults.EMPTY_STRING;

@@ -22,7 +22,7 @@ import com.paas.model.User;
 public class PasswdFileParser implements FileParseService<User> {
 
 	public List<User> parseRecords(List<String> records) throws PaaSApplicationException {
-		
+
 		if (records.isEmpty()) {
 			return Collections.emptyList();
 		}

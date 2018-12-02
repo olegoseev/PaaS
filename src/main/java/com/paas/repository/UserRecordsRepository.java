@@ -15,7 +15,7 @@ public class UserRecordsRepository implements BaseRepository<Integer, User> {
 
 	@Autowired
 	UserRecordsDataReader reader;
-	
+
 	@Autowired
 	UserRecordsFilter filter;
 

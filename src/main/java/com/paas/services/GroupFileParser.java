@@ -24,37 +24,38 @@ import com.paas.model.Group;
 public class GroupFileParser implements FileParseService<Group> {
 
 	public List<Group> parseRecords(List<String> records) throws PaaSApplicationException {
-		
+
 		if (records.isEmpty()) {
 			return Collections.emptyList();
 		}
-		
+
 		List<Group> groups = new LinkedList<>();
-		
+
 		try {
-			// Parsing the file and store records in the list 
-			for(String record : records) {
-				
+			// Parsing the file and store records in the list
+			for (String record : records) {
+
 				String[] parts = record.split(":");
 				Group group = new Group();
 				group.setName(parts[0]);
 				group.setGid(Integer.parseInt(parts[2]));
-				
+
 				// check if group members are present
 				if (parts.length > 3) {
 					group.setMembers(getMembers(parts[3]));
 				} else {
 					group.setMembers(Collections.emptyList());
 				}
-				
+
 				groups.add(group);
-			}			
+			}
 		} catch (PatternSyntaxException pe) {
 			throw new PaaSApplicationException(GroupFileParser.class, "Regular expression syntax error");
 		} catch (NumberFormatException ne) {
 			throw new PaaSApplicationException(GroupFileParser.class, "Fail to parse group id");
 		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new PaaSApplicationException(GroupFileParser.class, "File record parse error. Array index is out of bounds");
+			throw new PaaSApplicationException(GroupFileParser.class,
+					"File record parse error. Array index is out of bounds");
 		}
 
 		return groups;
@@ -70,13 +71,13 @@ public class GroupFileParser implements FileParseService<Group> {
 		try {
 			String[] parts = record.split(",");
 			members = new LinkedList<>(Arrays.asList(parts));
-			
+
 		} catch (PatternSyntaxException pe) {
 			throw new PaaSApplicationException(GroupFileParser.class, "Regular expression syntax error");
 		} catch (NullPointerException ne) {
 			throw new PaaSApplicationException(GroupFileParser.class, "Fail to create a members group list");
 		}
-		
+
 		return members;
 	}
 

@@ -7,35 +7,39 @@ import com.paas.utils.FileReader;
 import com.paas.utils.StringToPath;
 
 public abstract class DataReader<T> {
-	
+
 	protected String pathToFile;
-	
+
 	protected List<String> records;
-	
-	protected boolean needReload;
-	
-	
-	public void setDataSource (String path) {
+
+	private boolean needReload;
+
+	public void setUpdateNeeded() {
+		needReload = true;
+	}
+
+	public void setDataSource(String path) {
 		this.pathToFile = path;
 	}
-	
+
 	private synchronized void reloadDataIfNeeded() {
-		if(needReload == true) {
+		if (needReload == true) {
+			System.out.println("Reloading file: " + pathToFile);
 			reloadDataFromDataSource();
 			needReload = false;
 		}
 	}
-	
+
 	private void reloadDataFromDataSource() {
 		Path path = StringToPath.getPath(pathToFile);
 		FileReader fr = new FileReader();
 		records = fr.readFileInList(path);
 	}
-	
+
 	public T readData() {
 		reloadDataIfNeeded();
 		return getRecords();
 	}
-	
+
 	abstract T getRecords();
 }

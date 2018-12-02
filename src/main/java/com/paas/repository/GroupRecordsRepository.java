@@ -19,7 +19,7 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 
 	@Autowired
 	GroupRecordsDataReader reader;
-	
+
 	@Autowired
 	GroupRecordsFilter filter;
 

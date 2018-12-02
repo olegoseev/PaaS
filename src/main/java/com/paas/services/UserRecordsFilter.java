@@ -40,7 +40,8 @@ public class UserRecordsFilter extends RecordsFilter<User> {
 
 	private void userUidFilter() {
 		if (isUidInCriteria()) {
-			dataRecords = dataRecords.stream().filter(u -> u.getUid() == filterCriteria.getUid()).collect(Collectors.toList());
+			dataRecords = dataRecords.stream().filter(u -> u.getUid() == filterCriteria.getUid())
+					.collect(Collectors.toList());
 		}
 	}
 
@@ -50,7 +51,8 @@ public class UserRecordsFilter extends RecordsFilter<User> {
 
 	private void userGidFilter() {
 		if (isGidInCriteria()) {
-			dataRecords = dataRecords.stream().filter(u -> u.getGid() == filterCriteria.getGid()).collect(Collectors.toList());
+			dataRecords = dataRecords.stream().filter(u -> u.getGid() == filterCriteria.getGid())
+					.collect(Collectors.toList());
 		}
 	}
 
@@ -64,7 +66,7 @@ public class UserRecordsFilter extends RecordsFilter<User> {
 					.collect(Collectors.toList());
 		}
 	}
-	
+
 	private boolean isUserCommentsInCriteria() {
 		return filterCriteria.getComment().isBlank() == false;
 	}
@@ -75,7 +77,7 @@ public class UserRecordsFilter extends RecordsFilter<User> {
 					.collect(Collectors.toList());
 		}
 	}
-	
+
 	private boolean isUserHomeInCriteria() {
 		return filterCriteria.getHome().isBlank() == false;
 	}
@@ -86,7 +88,7 @@ public class UserRecordsFilter extends RecordsFilter<User> {
 					.collect(Collectors.toList());
 		}
 	}
-	
+
 	private boolean isUserShellInCriteria() {
 		return filterCriteria.getShell().isBlank() == false;
 	}

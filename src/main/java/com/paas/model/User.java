@@ -12,36 +12,35 @@ package com.paas.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-
 public class User implements Serializable {
-	
+
 	private static final long serialVersionUID = -5224168770465494929L;
-	
+
 	// User name
 	private String name;
-	
+
 	// User Id
 	private int uid;
-	
+
 	// Group Id
 	private int gid;
-	
+
 	// User comments
 	private String comment;
-	
-	 // User home directory
+
+	// User home directory
 	private String home;
-	
+
 	// User shell
 	private String shell;
-	
+
 	public User() {
-		name	= ModelDefaults.EMPTY_STRING;
-		uid		= ModelDefaults.UID_NOT_DEFINED;
-		gid		= ModelDefaults.GID_NOT_DEFINED;
+		name = ModelDefaults.EMPTY_STRING;
+		uid = ModelDefaults.UID_NOT_DEFINED;
+		gid = ModelDefaults.GID_NOT_DEFINED;
 		comment = ModelDefaults.EMPTY_STRING;
-		home	= ModelDefaults.EMPTY_STRING;
-		shell	= ModelDefaults.EMPTY_STRING;
+		home = ModelDefaults.EMPTY_STRING;
+		shell = ModelDefaults.EMPTY_STRING;
 	}
 
 	public String getName() {
@@ -92,7 +91,6 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "User [name=" + name + ", uid=" + uid + ", gid=" + gid + ", comment=" + comment + ", home=" + home
