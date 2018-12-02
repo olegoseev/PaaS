@@ -26,127 +26,131 @@ public class GroupRestController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(GroupRestController.class);
 
-	 // Group repository
+	// Group repository
 	@Autowired
 	GroupRecordsRepository groupRepository;
-	
+
 	/**
 	 * Entry point to get all the groups
-	 * @return
-	 * 		  json success/error
+	 * 
+	 * @return json success/error
 	 */
-	@RequestMapping(value="/groups", method=RequestMethod.GET)
+	@RequestMapping(value = "/groups", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<Object> getAllGroups() {
-		
+
 		try {
 			// get group entities from repository
 			List<Group> groups = groupRepository.findAll();
-			
+
 			// In case of empty list returned sending NO.CONTENT to client
-			if(groups == null || groups.isEmpty()) {
+			if (groups == null || groups.isEmpty()) {
 				return new ResponseEntity<Object>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
 			}
-			
+
 			return new ResponseEntity<Object>(AppResponse.successResult(groups), HttpStatus.OK);
-			
+
 		} catch (PaaSApplicationException e) {
 			LOG.error("Group Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	/**
 	 * Entry point to get a record for a group by group id
-	 * @param id
-	 * 			gid
-	 * @return 
-	 * 		  json success/error
+	 * 
+	 * @param id gid
+	 * @return json success/error
 	 */
-	@RequestMapping(value="/groups/{id}", method=RequestMethod.GET)
+	@RequestMapping(value = "/groups/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<Object> getGroup(@PathVariable Integer id) {
-		
+
 		try {
-			
+
 			Group group = groupRepository.findBy(id);
-			
-			if(group == null) {
+
+			if (group == null) {
 				return new ResponseEntity<Object>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
 			}
-			
+
 			return new ResponseEntity<Object>(AppResponse.successResult(group), HttpStatus.OK);
-			
+
 		} catch (PaaSApplicationException e) {
 			LOG.error("Group Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	/**
-	 * Helper function. create User object from Map object where some keys may not available
+	 * Entry point to get all the groups based on query parameters. Query string
+	 * should have at least one parameter.
+	 * 
+	 * @param queryMap name, gid, member(repeated)
+	 * @return json success/error
+	 */
+	@RequestMapping(value = "/groups/query", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Object> queryGroups(@RequestParam MultiValueMap<String, String> queryMap) {
+
+		try {
+			Group group = makeGroupFromMap(queryMap);
+			List<Group> groups = groupRepository.findAny(group);
+
+			if (groups.isEmpty()) {
+				return new ResponseEntity<Object>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<Object>(AppResponse.successResult(groups), HttpStatus.OK);
+		} catch (PaaSApplicationException e) {
+			LOG.error("User Repository encounter an error", e);
+			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+	}
+
+	/**
+	 * Helper function. create User object from Map object where some keys may not
+	 * available
+	 * 
 	 * @param map
 	 * @return User object
 	 */
 	private Group makeGroupFromMap(MultiValueMap<String, String> map) {
-		
-		Group group = new Group();
-		
 		try {
-			
-			group.setName(map.containsKey(ModelDefaults.GROUP_NAME) ? 
-					(String)map.get(ModelDefaults.GROUP_NAME).get(0) : ModelDefaults.EMPTY_STRING);
-			group.setGid(map.containsKey(ModelDefaults.GROUP_GID) ? 
-					Integer.parseInt((String)map.get(ModelDefaults.GROUP_GID).get(0)) : ModelDefaults.GID_NOT_DEFINED);
-			group.setMembers(map.containsKey(ModelDefaults.GROUP_MEMBER) ? 
-					map.get(ModelDefaults.GROUP_MEMBER) : Collections.emptyList());
-			
-		} catch (NullPointerException ne) {
-			LOG.error(ne.getMessage());
-			ne.printStackTrace();
-			return null;
-		} catch (ClassCastException cce) {
-			LOG.error(cce.getMessage());
-			cce.printStackTrace();
-			return null;
-		}
-		return group;
-	}
-	
-	/**
-	 * Entry point to get all the groups based on query parameters. 
-	 * Query string should have at least one parameter.
-	 * 
-	 * @param queryMap
-	 * 		  name, gid, member(repeated) 
-	 * @return 
-	 * 		  json success/error
-	 */
-	@RequestMapping(value="/groups/query", method=RequestMethod.GET)
-	@ResponseBody
-	public ResponseEntity<Object> queryGroups(@RequestParam MultiValueMap<String, String> queryMap) {
-		
-	
-		try {
-			
-			Group group = makeGroupFromMap(queryMap);
-			
-			if(group == null) {
-				return new ResponseEntity<Object>(AppResponse.internalServerError(), HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-			
-			List<Group> groups = groupRepository.findAny(group);
-			
-			if(groups.isEmpty()) {
-				return new ResponseEntity<Object>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
-			}
-			
-			return new ResponseEntity<Object>(AppResponse.successResult(groups), HttpStatus.OK);
-			
-		} catch (PaaSApplicationException e) {
-			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+			Group group = new Group();
+			String name = extractGroupName(map);
+			group.setName(name);
 
+			int gid = extractGroupId(map);
+			group.setGid(gid);
+
+			List<String> members = extractGroupMembers(map);
+			group.setMembers(members);
+			
+			return group;
+		} catch (NullPointerException ne) {
+			throw new PaaSApplicationException(GroupRestController.class, "Null pointer exception");
+		} catch (ClassCastException cce) {
+			throw new PaaSApplicationException(GroupRestController.class, "Class cast exception");
 		}
+	}
+
+	private String extractGroupName(MultiValueMap<String, String> map) {
+		return map.containsKey(ModelDefaults.GROUP_NAME) ? (String) map.get(ModelDefaults.GROUP_NAME).get(0)
+				: ModelDefaults.EMPTY_STRING;
+	}
+
+	private int extractGroupId(MultiValueMap<String, String> map) {
+		return map.containsKey(ModelDefaults.GROUP_GID)
+				? Integer.parseInt((String) map.get(ModelDefaults.GROUP_GID).get(0))
+				: ModelDefaults.GID_NOT_DEFINED;
+	}
+
+	private List<String> extractGroupMembers(MultiValueMap<String, String> map) {
+		return map.containsKey(ModelDefaults.GROUP_MEMBER) ? map.get(ModelDefaults.GROUP_MEMBER)
+				: Collections.emptyList();
 	}
 }

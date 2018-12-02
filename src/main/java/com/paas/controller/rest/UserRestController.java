@@ -120,47 +120,6 @@ public class UserRestController {
 	}
 
 	/**
-	 * Helper function. create User object from Map object where some keys may not
-	 * available
-	 * 
-	 * @param map
-	 * @return User object
-	 */
-	private User makeUserFromMap(Map<String, String> map) {
-
-		User user = new User();
-
-		try {
-
-			user.setName(map.containsKey(ModelDefaults.USER_NAME) ? (String) map.get(ModelDefaults.USER_NAME)
-					: ModelDefaults.EMPTY_STRING);
-			user.setUid(
-					map.containsKey(ModelDefaults.USER_UID) ? Integer.parseInt((String) map.get(ModelDefaults.USER_UID))
-							: ModelDefaults.UID_NOT_DEFINED);
-			user.setGid(
-					map.containsKey(ModelDefaults.USER_GID) ? Integer.parseInt((String) map.get(ModelDefaults.USER_GID))
-							: ModelDefaults.GID_NOT_DEFINED);
-			user.setComment(map.containsKey(ModelDefaults.USER_COMMENT) ? (String) map.get(ModelDefaults.USER_COMMENT)
-					: ModelDefaults.EMPTY_STRING);
-			user.setHome(map.containsKey(ModelDefaults.USER_HOME) ? (String) map.get(ModelDefaults.USER_HOME)
-					: ModelDefaults.EMPTY_STRING);
-			user.setShell(map.containsKey(ModelDefaults.USER_SHELL) ? (String) map.get(ModelDefaults.USER_SHELL)
-					: ModelDefaults.EMPTY_STRING);
-
-		} catch (NullPointerException ne) {
-			LOG.error(ne.getMessage());
-			ne.printStackTrace();
-			return null;
-		} catch (ClassCastException cce) {
-			LOG.error(cce.getMessage());
-			cce.printStackTrace();
-			return null;
-		}
-
-		return user;
-	}
-
-	/**
 	 * Entry point to get all the users based on query parameters. Query string
 	 * should have at least one parameter.
 	 * 
@@ -175,10 +134,6 @@ public class UserRestController {
 
 			User user = makeUserFromMap(queryMap);
 
-			if (user == null) {
-				return new ResponseEntity<Object>(AppResponse.internalServerError(), HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-
 			List<User> users = userRepository.findAny(user);
 
 			if (users.isEmpty()) {
@@ -192,5 +147,74 @@ public class UserRestController {
 			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	/**
+	 * Helper function. create User object from Map object where some keys may not
+	 * available
+	 * 
+	 * @param map
+	 * @return User object
+	 */
+	private User makeUserFromMap(Map<String, String> map) {
+
+		try {
+			User user = new User();
+			
+			String name = extractUserName(map);
+			user.setName(name);
+			
+			int uid = extractUserId(map);
+			user.setUid(uid);
+			
+			int gid = extractUserGroupId(map);
+			user.setGid(gid);
+			
+			String comments = extractUserComments(map);
+			user.setComment(comments);
+			
+			String home = extractUserHomeDir(map);
+			user.setHome(home);
+			
+			String shell = extractUserShell(map);
+			user.setShell(shell);
+			
+			return user;
+
+		} catch (NullPointerException ne) {
+			throw new PaaSApplicationException(UserRestController.class, "Null pointer exception");
+		} catch (ClassCastException cce) {
+			throw new PaaSApplicationException(UserRestController.class, "Class cast exception");
+		}
+	}
+
+	private String extractUserName(Map<String, String> map) {
+		return map.containsKey(ModelDefaults.USER_NAME) ? (String) map.get(ModelDefaults.USER_NAME)
+				: ModelDefaults.EMPTY_STRING;
+	}
+
+	private int extractUserId(Map<String, String> map) {
+		return map.containsKey(ModelDefaults.USER_UID) ? Integer.parseInt((String) map.get(ModelDefaults.USER_UID))
+				: ModelDefaults.UID_NOT_DEFINED;
+	}
+
+	private int extractUserGroupId(Map<String, String> map) {
+		return map.containsKey(ModelDefaults.USER_GID) ? Integer.parseInt((String) map.get(ModelDefaults.USER_GID))
+				: ModelDefaults.GID_NOT_DEFINED;
+	}
+	
+	private String extractUserComments(Map<String, String> map) {
+		return map.containsKey(ModelDefaults.USER_COMMENT) ? (String) map.get(ModelDefaults.USER_COMMENT)
+				: ModelDefaults.EMPTY_STRING;
+	}
+	
+	private String extractUserHomeDir(Map<String, String> map) {
+		return map.containsKey(ModelDefaults.USER_HOME) ? (String) map.get(ModelDefaults.USER_HOME)
+				: ModelDefaults.EMPTY_STRING;
+	}
+	
+	private String extractUserShell(Map<String, String> map) {
+		return map.containsKey(ModelDefaults.USER_SHELL) ? (String) map.get(ModelDefaults.USER_SHELL)
+				: ModelDefaults.EMPTY_STRING;
 	}
 }
