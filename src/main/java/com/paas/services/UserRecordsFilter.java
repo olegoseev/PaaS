@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.paas.model.ModelDefaults;
+import static com.paas.model.ModelDefaults.*;
 import com.paas.model.User;
 
 @Service
@@ -46,7 +46,7 @@ public class UserRecordsFilter extends RecordsFilter<User> {
 	}
 
 	private boolean isUidInCriteria() {
-		return filterCriteria.getUid() != ModelDefaults.UID_NOT_DEFINED;
+		return filterCriteria.getUid() != UID_NOT_DEFINED;
 	}
 
 	private void userGidFilter() {
@@ -57,7 +57,7 @@ public class UserRecordsFilter extends RecordsFilter<User> {
 	}
 
 	private boolean isGidInCriteria() {
-		return filterCriteria.getGid() != ModelDefaults.GID_NOT_DEFINED;
+		return filterCriteria.getGid() != GID_NOT_DEFINED;
 	}
 
 	private void userCommentsFilter() {

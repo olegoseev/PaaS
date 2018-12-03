@@ -24,7 +24,6 @@ public abstract class DataReader<T> {
 
 	private synchronized void reloadDataIfNeeded() {
 		if (needReload == true) {
-			System.out.println("Reloading file: " + pathToFile);
 			reloadDataFromDataSource();
 			needReload = false;
 		}

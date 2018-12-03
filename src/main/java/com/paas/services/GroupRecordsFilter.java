@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.paas.model.Group;
-import com.paas.model.ModelDefaults;
+import static com.paas.model.ModelDefaults.*;
 
 @Service
 public class GroupRecordsFilter extends RecordsFilter<Group> {
@@ -43,7 +43,7 @@ public class GroupRecordsFilter extends RecordsFilter<Group> {
 	}
 
 	private boolean isGroupGidInCriteria() {
-		return filterCriteria.getGid() != ModelDefaults.GID_NOT_DEFINED;
+		return filterCriteria.getGid() != GID_NOT_DEFINED;
 	}
 
 	private void groupMembers() {

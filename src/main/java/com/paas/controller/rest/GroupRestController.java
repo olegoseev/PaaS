@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
-import com.paas.model.ModelDefaults;
 import com.paas.repository.GroupRecordsRepository;
 import com.paas.utils.AppResponse;
+
+import static com.paas.model.ModelDefaults.*;
 
 @RestController
 public class GroupRestController {
@@ -130,7 +131,7 @@ public class GroupRestController {
 
 			List<String> members = extractGroupMembers(map);
 			group.setMembers(members);
-			
+
 			return group;
 		} catch (NullPointerException ne) {
 			throw new PaaSApplicationException(GroupRestController.class, "Null pointer exception");
@@ -140,18 +141,14 @@ public class GroupRestController {
 	}
 
 	private String extractGroupName(MultiValueMap<String, String> map) {
-		return map.containsKey(ModelDefaults.GROUP_NAME) ? (String) map.get(ModelDefaults.GROUP_NAME).get(0)
-				: ModelDefaults.EMPTY_STRING;
+		return map.containsKey(GROUP_NAME) ? (String) map.get(GROUP_NAME).get(0) : EMPTY_STRING;
 	}
 
 	private int extractGroupId(MultiValueMap<String, String> map) {
-		return map.containsKey(ModelDefaults.GROUP_GID)
-				? Integer.parseInt((String) map.get(ModelDefaults.GROUP_GID).get(0))
-				: ModelDefaults.GID_NOT_DEFINED;
+		return map.containsKey(GROUP_GID) ? Integer.parseInt((String) map.get(GROUP_GID).get(0)) : GID_NOT_DEFINED;
 	}
 
 	private List<String> extractGroupMembers(MultiValueMap<String, String> map) {
-		return map.containsKey(ModelDefaults.GROUP_MEMBER) ? map.get(ModelDefaults.GROUP_MEMBER)
-				: Collections.emptyList();
+		return map.containsKey(GROUP_MEMBER) ? map.get(GROUP_MEMBER) : Collections.emptyList();
 	}
 }

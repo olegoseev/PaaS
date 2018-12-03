@@ -12,6 +12,8 @@ package com.paas.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import static com.paas.model.ModelDefaults.*;
+
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -5224168770465494929L;
@@ -35,12 +37,12 @@ public class User implements Serializable {
 	private String shell;
 
 	public User() {
-		name = ModelDefaults.EMPTY_STRING;
-		uid = ModelDefaults.UID_NOT_DEFINED;
-		gid = ModelDefaults.GID_NOT_DEFINED;
-		comment = ModelDefaults.EMPTY_STRING;
-		home = ModelDefaults.EMPTY_STRING;
-		shell = ModelDefaults.EMPTY_STRING;
+		name = EMPTY_STRING;
+		uid = UID_NOT_DEFINED;
+		gid = GID_NOT_DEFINED;
+		comment = EMPTY_STRING;
+		home = EMPTY_STRING;
+		shell = EMPTY_STRING;
 	}
 
 	public String getName() {

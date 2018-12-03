@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static com.paas.model.ModelDefaults.*;
+
 public class Group implements Serializable {
 
 	private static final long serialVersionUID = 3000633563828136079L;
@@ -29,8 +31,8 @@ public class Group implements Serializable {
 	private List<String> members;
 
 	public Group() {
-		name = ModelDefaults.EMPTY_STRING;
-		gid = ModelDefaults.GID_NOT_DEFINED;
+		name = EMPTY_STRING;
+		gid = GID_NOT_DEFINED;
 		members = Collections.emptyList();
 	}
 

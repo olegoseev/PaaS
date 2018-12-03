@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
-import com.paas.model.ModelDefaults;
 import com.paas.model.User;
 import com.paas.repository.GroupRecordsRepository;
 import com.paas.repository.UserRecordsRepository;
 import com.paas.utils.AppResponse;
+
+import static com.paas.model.ModelDefaults.*;
 
 @RestController
 public class UserRestController {
@@ -189,32 +190,26 @@ public class UserRestController {
 	}
 
 	private String extractUserName(Map<String, String> map) {
-		return map.containsKey(ModelDefaults.USER_NAME) ? (String) map.get(ModelDefaults.USER_NAME)
-				: ModelDefaults.EMPTY_STRING;
+		return map.containsKey(USER_NAME) ? (String) map.get(USER_NAME) : EMPTY_STRING;
 	}
 
 	private int extractUserId(Map<String, String> map) {
-		return map.containsKey(ModelDefaults.USER_UID) ? Integer.parseInt((String) map.get(ModelDefaults.USER_UID))
-				: ModelDefaults.UID_NOT_DEFINED;
+		return map.containsKey(USER_UID) ? Integer.parseInt((String) map.get(USER_UID)) : UID_NOT_DEFINED;
 	}
 
 	private int extractUserGroupId(Map<String, String> map) {
-		return map.containsKey(ModelDefaults.USER_GID) ? Integer.parseInt((String) map.get(ModelDefaults.USER_GID))
-				: ModelDefaults.GID_NOT_DEFINED;
+		return map.containsKey(USER_GID) ? Integer.parseInt((String) map.get(USER_GID)) : GID_NOT_DEFINED;
 	}
 
 	private String extractUserComments(Map<String, String> map) {
-		return map.containsKey(ModelDefaults.USER_COMMENT) ? (String) map.get(ModelDefaults.USER_COMMENT)
-				: ModelDefaults.EMPTY_STRING;
+		return map.containsKey(USER_COMMENT) ? (String) map.get(USER_COMMENT) : EMPTY_STRING;
 	}
 
 	private String extractUserHomeDir(Map<String, String> map) {
-		return map.containsKey(ModelDefaults.USER_HOME) ? (String) map.get(ModelDefaults.USER_HOME)
-				: ModelDefaults.EMPTY_STRING;
+		return map.containsKey(USER_HOME) ? (String) map.get(USER_HOME) : EMPTY_STRING;
 	}
 
 	private String extractUserShell(Map<String, String> map) {
-		return map.containsKey(ModelDefaults.USER_SHELL) ? (String) map.get(ModelDefaults.USER_SHELL)
-				: ModelDefaults.EMPTY_STRING;
+		return map.containsKey(USER_SHELL) ? (String) map.get(USER_SHELL) : EMPTY_STRING;
 	}
 }
