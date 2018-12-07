@@ -55,24 +55,29 @@ public class FileSystemWatchService {
 		executor.shutdown();
 	}
 
-	public void startWatchService() {
+	public void startWatchService() throws PaaSApplicationException {
 		try {
 			registerDirectory();
+			processEvents();
+		} catch (PaaSApplicationException e) {
+			throw new PaaSApplicationException(FileSystemWatchService.class,
+					"Error registering directory with watch service");
+		}
+	}
+
+	private void registerDirectory() throws PaaSApplicationException {
+		Path path = StringToPath.getPath(filteToWatch);
+		Path dir = path.getParent();
+		try {
+			dir.register(watcher, ENTRY_MODIFY);
 		} catch (IOException e) {
 			throw new PaaSApplicationException(FileSystemWatchService.class,
 					"Error registering directory with watch service");
 		}
-		processEvents();
-	}
-
-	private void registerDirectory() throws IOException {
-		Path path = StringToPath.getPath(filteToWatch);
-		Path dir = path.getParent();
-		dir.register(watcher, ENTRY_MODIFY);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void processEvents() {
+	private void processEvents() throws PaaSApplicationException {
 		executor.submit(() -> {
 
 			Path path = StringToPath.getPath(filteToWatch);

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
 import com.paas.services.FileSystemWatchService;
 import com.paas.services.GroupFileParser;
@@ -27,11 +28,15 @@ public class GroupRecordsDataReader extends DataReader<List<Group>> {
 
 	@PostConstruct
 	public void init() {
-		pathToFile = path;
-		setUpdateNeeded();
-		watcher.setFilteToWatch(path);
-		watcher.setSubsciber(this);
-		watcher.startWatchService();
+		try {
+			pathToFile = path;
+			setUpdateNeeded();
+			watcher.setFilteToWatch(path);
+			watcher.setSubsciber(this);
+			watcher.startWatchService();
+		} catch (PaaSApplicationException pe) {
+			pe.printStackTrace();
+		}
 	}
 
 	@Override
