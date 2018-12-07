@@ -57,11 +57,7 @@ public class TestGroupRecordsRepository {
 
 	@Test
 	public void testFindAny() {
-
-//		ReflectionTestUtils.setField(repo, "groupFile", realFile);
-
 		// test for group: daemon:x:1:member1,member2,member3
-
 		Group group = new Group();
 
 		List<String> members = getMembers();
@@ -77,9 +73,6 @@ public class TestGroupRecordsRepository {
 
 	@Test
 	public void testFindBy() {
-
-//		ReflectionTestUtils.setField(repo, "groupFile", realFile);
-
 		// test for group: daemon:x:1:member1,member2,member3
 		List<String> members = getMembers();
 
@@ -94,9 +87,6 @@ public class TestGroupRecordsRepository {
 
 	@Test
 	public void testFindAllGroupsForUser() {
-
-//		ReflectionTestUtils.setField(repo, "groupFile", realFile);
-
 		// user sys should appears in two groups
 		// sys:x:3:sys
 		// adm:x:4:sys

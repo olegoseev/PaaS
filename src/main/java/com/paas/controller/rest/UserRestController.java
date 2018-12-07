@@ -29,18 +29,12 @@ public class UserRestController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserRestController.class);
 	// User repository
-	//@Autowired
+	@Autowired
 	private UserRecordsRepository userRepository;
 
 	// Group repository
-	//@Autowired
-	private GroupRecordsRepository groupRepository;
-	
 	@Autowired
-	public UserRestController(UserRecordsRepository userRepo, GroupRecordsRepository groupRepo) {
-		userRepository = userRepo;
-		groupRepository = groupRepo;
-	}
+	private GroupRecordsRepository groupRepository;
 
 	/**
 	 * Entry point to get all users

@@ -35,15 +35,12 @@ public class TestUserRecordsRepository {
 
 	@Test
 	public void testFindAll() {
-//		ReflectionTestUtils.setField(repo, "userFile", realFile);
 		List<User> list = repo.findAll();
 		Assertions.assertEquals(10, list.size(), "findAll user records");
 	}
 
 	@Test
 	public void testFindAny() {
-//		ReflectionTestUtils.setField(repo, "userFile", realFile);
-
 		User user = new User();
 
 		user.setName("tstnews");
@@ -57,8 +54,6 @@ public class TestUserRecordsRepository {
 
 	@Test
 	public void testFindBy() {
-
-//		ReflectionTestUtils.setField(repo, "userFile", realFile);
 		// let's check user games
 		// games:x:5:60:games:/usr/games:/usr/sbin/nologin
 		User actualUser = repo.findBy(5);
