@@ -23,6 +23,11 @@ import com.paas.model.Group;
 @Service
 public class GroupFileParser implements FileParseService<Group> {
 
+	private final int NAME = 0;
+	private final int GID = 2;
+	private final int MEMBERS = 3;
+
+
 	public List<Group> parseRecords(List<String> records) throws PaaSApplicationException {
 
 		if (records.isEmpty()) {
@@ -32,17 +37,15 @@ public class GroupFileParser implements FileParseService<Group> {
 		List<Group> groups = new LinkedList<>();
 
 		try {
-			// Parsing the file and store records in the list
 			for (String record : records) {
 
 				String[] parts = record.split(":");
 				Group group = new Group();
-				group.setName(parts[0]);
-				group.setGid(Integer.parseInt(parts[2]));
+				group.setName(parts[NAME]);
+				group.setGid(Integer.parseInt(parts[GID]));
 
-				// check if group members are present
-				if (parts.length > 3) {
-					group.setMembers(getMembers(parts[3]));
+				if (hasMembers(parts)) {
+					group.setMembers(getMembers(parts[MEMBERS]));
 				} else {
 					group.setMembers(Collections.emptyList());
 				}
@@ -59,6 +62,11 @@ public class GroupFileParser implements FileParseService<Group> {
 		}
 
 		return groups;
+	}
+
+	// members in the group records is a third argument
+	private boolean hasMembers(String[] ar) {
+		return ar.length > 3;
 	}
 
 	/**

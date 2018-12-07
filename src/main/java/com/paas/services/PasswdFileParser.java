@@ -20,6 +20,13 @@ import com.paas.model.User;
 
 @Service
 public class PasswdFileParser implements FileParseService<User> {
+	
+	private final int NAME = 0;
+	private final int UID = 2;
+	private final int GID = 3;
+	private final int COMMENTS = 4;
+	private final int HOME = 5;
+	private final int SHELL = 6;
 
 	public List<User> parseRecords(List<String> records) throws PaaSApplicationException {
 
@@ -34,12 +41,12 @@ public class PasswdFileParser implements FileParseService<User> {
 
 				String[] parts = record.split(":");
 				User user = new User();
-				user.setName(parts[0]);
-				user.setUid(Integer.parseInt(parts[2]));
-				user.setGid(Integer.parseInt(parts[3]));
-				user.setComment(parts[4]);
-				user.setHome(parts[5]);
-				user.setShell(parts[6]);
+				user.setName(parts[NAME]);
+				user.setUid(Integer.parseInt(parts[UID]));
+				user.setGid(Integer.parseInt(parts[GID]));
+				user.setComment(parts[COMMENTS]);
+				user.setHome(parts[HOME]);
+				user.setShell(parts[SHELL]);
 				users.add(user);
 			}
 		} catch (PatternSyntaxException pe) {
