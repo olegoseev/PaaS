@@ -13,7 +13,7 @@ import static com.paas.model.ModelDefaults.*;
 public class GroupRecordsFilter extends RecordsFilter<Group> {
 
 	@Override
-	public List<Group> appplyFor(List<Group> records) {
+	public List<Group> applyFor(List<Group> records) {
 		if (records.isEmpty()) {
 			return Collections.emptyList();
 		}

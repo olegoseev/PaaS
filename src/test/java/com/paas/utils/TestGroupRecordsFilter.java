@@ -44,7 +44,7 @@ public class TestGroupRecordsFilter {
 		List<Group> groups = reader.readData();
 		GroupRecordsFilter filter = new GroupRecordsFilter();
 		filter.setCriteria(group);
-		groups = filter.appplyFor(groups);
+		groups = filter.applyFor(groups);
 		Assertions.assertEquals(1, groups.size(), "Should return only one user");
 		Assertions.assertEquals(group, groups.get(0), "Found user should match");
 	}

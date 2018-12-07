@@ -15,53 +15,17 @@ import com.paas.services.GroupRecordsFilter;
 import com.paas.utils.Utils;
 
 @Repository
-public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
+public class GroupRecordsRepository extends BaseRepositoryImpl<Integer, Group> {
 
+	
 	@Autowired
-	GroupRecordsDataReader reader;
+	public GroupRecordsRepository(GroupRecordsDataReader reader,
+									GroupRecordsFilter filter) {
+		super(reader, filter);
 
-	@Autowired
-	GroupRecordsFilter filter;
-
-	/**
-	 * All groups
-	 * 
-	 * @return list of Group objects if found an empty list if not
-	 */
-	@Override
-	public List<Group> findAll() throws PaaSApplicationException {
-		return reader.readData();
 	}
 
-	/**
-	 * Find all groups matching to input object.
-	 * 
-	 * @param group partially defined group object
-	 * 
-	 * @return list of Group object if found an empty list if not
-	 */
-	@Override
-	public List<Group> findAny(Group group) throws PaaSApplicationException {
-		List<Group> groups = reader.readData();
-		filter.setCriteria(group);
-		groups = filter.appplyFor(groups);
-		return groups;
-	}
-
-	/**
-	 * Find group by Id
-	 * 
-	 * @param group Id
-	 * 
-	 * @return Group object if found null if not found
-	 */
-	@Override
-	public Group findBy(Integer id) throws PaaSApplicationException {
-		List<Group> groups = reader.readData();
-		return findById(id, groups);
-	}
-
-	private Group findById(Integer id, List<Group> groups) {
+	Group filterByPk(Integer id, List<Group> groups) {
 		Optional<Group> group = groups.stream().filter(g -> g.getGid() == id).findFirst();
 		// Make sure we found something
 		if (group.isPresent()) {
@@ -71,7 +35,7 @@ public class GroupRecordsRepository implements BaseRepository<Integer, Group> {
 	}
 
 	public List<Group> findAllGroupsForUser(User user) throws PaaSApplicationException {
-		List<Group> groups = reader.readData();
+		List<Group> groups = findAll();
 		String name = user.getName();
 
 		List<Group> userMemberOf = findGroupsUserMemberOf(groups, name);

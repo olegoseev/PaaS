@@ -14,7 +14,7 @@ import com.paas.services.FileSystemWatchService;
 import com.paas.services.GroupFileParser;
 
 @Service
-public class GroupRecordsDataReader extends DataReader<List<Group>> {
+public class GroupRecordsDataReader extends DataReader<Group> {
 
 	// value for the string is in the property file
 	@Value("${group.records}")

@@ -44,7 +44,7 @@ public class TestUserRecordsFilter {
 		List<User> users = reader.readData();
 		UserRecordsFilter filter = new UserRecordsFilter();
 		filter.setCriteria(user);
-		users = filter.appplyFor(users);
+		users = filter.applyFor(users);
 		Assertions.assertEquals(1, users.size(), "Should return only one user");
 		Assertions.assertEquals(user, users.get(0), "Found user should match");
 	}

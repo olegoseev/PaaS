@@ -14,7 +14,7 @@ import com.paas.services.FileSystemWatchService;
 import com.paas.services.PasswdFileParser;
 
 @Service
-public class UserRecordsDataReader extends DataReader<List<User>> {
+public class UserRecordsDataReader extends DataReader<User> {
 
 	// value for the string is in the property file
 	@Value("${user.records}")

@@ -6,7 +6,7 @@ import java.util.List;
 import com.paas.utils.FileReader;
 import com.paas.utils.StringToPath;
 
-public abstract class DataReader<T> {
+public abstract class DataReader<MODEL> {
 
 	protected String pathToFile;
 
@@ -35,10 +35,10 @@ public abstract class DataReader<T> {
 		records = fr.readFileInList(path);
 	}
 
-	public T readData() {
+	public List<MODEL> readData() {
 		reloadDataIfNeeded();
 		return getRecords();
 	}
 
-	abstract T getRecords();
+	abstract List<MODEL> getRecords();
 }

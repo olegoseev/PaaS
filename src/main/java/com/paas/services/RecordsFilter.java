@@ -12,5 +12,5 @@ public abstract class RecordsFilter<MODEL> {
 		filterCriteria = criteria;
 	}
 
-	abstract public List<MODEL> appplyFor(List<MODEL> records);
+	abstract public List<MODEL> applyFor(List<MODEL> records);
 }

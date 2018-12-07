@@ -13,7 +13,7 @@ import com.paas.model.User;
 public class UserRecordsFilter extends RecordsFilter<User> {
 
 	@Override
-	public List<User> appplyFor(List<User> records) {
+	public List<User> applyFor(List<User> records) {
 		if (records.isEmpty()) {
 			return Collections.emptyList();
 		}
