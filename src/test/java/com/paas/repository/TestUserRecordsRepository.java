@@ -46,13 +46,13 @@ public class TestUserRecordsRepository {
 
 		User user = new User();
 
-		user.setName("news");
+		user.setName("tstnews");
 		user.setHome("/var/spool/news");
 
 		List<User> list = repo.findAny(user);
 		Assertions.assertEquals(1, list.size(), "Find a single user by given username and home directory");
-		Assertions.assertEquals("news", list.get(0).getName(), "Find user 'news'");
-		Assertions.assertEquals("/var/spool/news", list.get(0).getHome(), "User 'news' home directory");
+		Assertions.assertEquals("tstnews", list.get(0).getName(), "Find user 'tstnews'");
+		Assertions.assertEquals("/var/spool/news", list.get(0).getHome(), "User 'tstnews' home directory");
 	}
 
 	@Test
@@ -63,12 +63,12 @@ public class TestUserRecordsRepository {
 		// games:x:5:60:games:/usr/games:/usr/sbin/nologin
 		User actualUser = repo.findBy(5);
 		User expectedUser = new User();
-		expectedUser.setName("supergames");
+		expectedUser.setName("tstgames");
 		expectedUser.setUid(5);
 		expectedUser.setGid(60);
 		expectedUser.setHome("/usr/games");
 		expectedUser.setShell("/usr/sbin/nologin");
-		expectedUser.setComment("games");
+		expectedUser.setComment("tstgames");
 
 		Assertions.assertEquals(actualUser, expectedUser, "Find user by Id");
 	}

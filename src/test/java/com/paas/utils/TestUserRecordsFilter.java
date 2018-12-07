@@ -34,10 +34,10 @@ public class TestUserRecordsFilter {
 		// man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
 		User user = new User();
 		
-		user.setName("manpage");
+		user.setName("tstman");
 		user.setUid(6);
 		user.setGid(12);
-		user.setComment("manpage");
+		user.setComment("tstman");
 		user.setHome("/var/cache/man");
 		user.setShell("/usr/sbin/nologin");
 		

@@ -41,7 +41,7 @@ public class TestUserRestController {
 		this.mockMvc.perform(get("/users/5"))
 					.andExpect(status().isOk())
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
-					.andExpect(content().json("{'status': 'OK','success':'OK','data':{'name':'supergames','uid':5,'gid':60,'comment':'games','home':'/usr/games'}}"));
+					.andExpect(content().json("{'status': 'OK','success':'OK','data':{'name':'tstgames','uid':5,'gid':60,'comment':'tstgames','home':'/usr/games'}}"));
 	}
 
 	@Test
@@ -61,7 +61,7 @@ public class TestUserRestController {
 					.andExpect(status().isOk())
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
 					// check some key : value fields in the response
-					.andExpect(content().json("{'status': 'OK','success':'OK', 'data':[{'name':'sys','gid':3},{'name':'adm','gid':4}]}"));
+					.andExpect(content().json("{'status': 'OK','success':'OK', 'data':[{'name':'tstsys','gid':3},{'name':'tstadm','gid':4}]}"));
 	}
 	
 	
@@ -79,11 +79,11 @@ public class TestUserRestController {
 	@Test
 	public void queryUser() throws Exception {
 		// query user - mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
-		this.mockMvc.perform(get("/users/query?uid=8&name=mail"))
+		this.mockMvc.perform(get("/users/query?uid=8&name=tstmail"))
 					.andExpect(status().isOk())
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
 					.andExpect(content().json("{'status': 'OK','success':'OK',"
-							+ "'data':[{'name':'mail','uid':8,'gid':8,'comment':'mail','home':'/var/mail','shell':'/usr/sbin/nologin'}]}"));
+							+ "'data':[{'name':'tstmail','uid':8,'gid':8,'comment':'tstmail','home':'/var/mail','shell':'/usr/sbin/nologin'}]}"));
 	}
 	
 	@Test

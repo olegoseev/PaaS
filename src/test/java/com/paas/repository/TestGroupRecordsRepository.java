@@ -71,7 +71,7 @@ public class TestGroupRecordsRepository {
 
 		List<Group> list = repo.findAny(group);
 		Assertions.assertEquals(1, list.size(), "Find a single user by given username and home directory");
-		Assertions.assertEquals("daemon", list.get(0).getName(), "Find user 'news'");
+		Assertions.assertEquals("tstdaemon", list.get(0).getName(), "Find user 'tstnews'");
 		Assertions.assertEquals(members, list.get(0).getMembers(), "User 'news' home directory");
 	}
 
@@ -85,7 +85,7 @@ public class TestGroupRecordsRepository {
 
 		Group expected = new Group();
 		expected.setGid(1);
-		expected.setName("daemon");
+		expected.setName("tstdaemon");
 		expected.setMembers(members);
 
 		Group actual = repo.findBy(1);
@@ -102,13 +102,13 @@ public class TestGroupRecordsRepository {
 		// adm:x:4:sys
 
 		User user = new User();
-		user.setName("sys");
+		user.setName("tstsys");
 
 		List<Group> groups = repo.findAllGroupsForUser(user);
 
 		List<String> names = groups.stream().map(g -> g.getName()).collect(Collectors.toList());
 
 		Assertions.assertEquals(2, groups.size(), "Find all groups for a given user");
-		assertThat(names, hasItems("sys", "adm"));
+		assertThat(names, hasItems("tstsys", "tstadm"));
 	}
 }

@@ -44,7 +44,7 @@ public class TestGroupRestController {
 		this.mockMvc.perform(get("/groups/5"))
 					.andExpect(status().isOk())
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
-					.andExpect(content().json("{'status': 'OK','success':'OK','data':{'name':'tty','gid':5}}"));
+					.andExpect(content().json("{'status': 'OK','success':'OK','data':{'name':'tsttty','gid':5}}"));
 
 	}
 	
@@ -62,10 +62,10 @@ public class TestGroupRestController {
 	@Test
 	public void queryGroups() throws Exception {
 		// looking for a group with name:sys and gid:3
-		this.mockMvc.perform(get("/groups/query?gid=3&name=sys"))
+		this.mockMvc.perform(get("/groups/query?gid=3&name=tstsys"))
 					.andExpect(status().isOk())
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
-					.andExpect(content().json("{'status': 'OK','success':'OK','data':[{'name':'sys','gid':3}]}"));
+					.andExpect(content().json("{'status': 'OK','success':'OK','data':[{'name':'tstsys','gid':3}]}"));
 
 	}
 	

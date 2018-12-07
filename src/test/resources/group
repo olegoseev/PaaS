@@ -1,7 +1,7 @@
-root:x:0:
-daemon:x:1:member1,member2,member3
-bin:x:2:
-sys:x:3:sys
-adm:x:4:sys
-tty:x:5:
-disk:x:6:
+tstroot:x:0:
+tstdaemon:x:1:member1,member2,member3
+tstbin:x:2:
+tstsys:x:3:tstsys
+tstadm:x:4:tstsys
+tsttty:x:5:
+tstdisk:x:6:

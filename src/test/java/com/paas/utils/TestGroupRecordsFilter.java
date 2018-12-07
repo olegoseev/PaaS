@@ -33,7 +33,7 @@ public class TestGroupRecordsFilter {
 
 		// daemon:x:1:member1,member2,member3
 		Group group = new Group();
-		group.setName("daemon");
+		group.setName("tstdaemon");
 		group.setGid(1);
 		List<String> members = new LinkedList<>();
 		members.add("member1");
