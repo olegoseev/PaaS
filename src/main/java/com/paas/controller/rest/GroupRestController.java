@@ -28,7 +28,6 @@ public class GroupRestController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(GroupRestController.class);
 
-	// Group repository
 	@Autowired
 	GroupRecordsRepository groupRepository;
 
