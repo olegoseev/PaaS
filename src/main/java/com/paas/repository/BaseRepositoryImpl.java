@@ -3,7 +3,7 @@ package com.paas.repository;
 import java.util.List;
 
 import com.paas.repository.dao.DataReader;
-import com.paas.services.RecordsFilter;
+import com.paas.services.filter.RecordsFilter;
 
 public abstract class BaseRepositoryImpl <PK, MODEL> implements BaseRepository<PK, MODEL> {
 	

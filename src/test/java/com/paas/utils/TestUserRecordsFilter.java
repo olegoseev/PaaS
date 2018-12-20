@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.paas.model.User;
 import com.paas.repository.dao.UserRecordsDataReader;
-import com.paas.services.UserRecordsFilter;
+import com.paas.services.filter.UserRecordsFilter;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

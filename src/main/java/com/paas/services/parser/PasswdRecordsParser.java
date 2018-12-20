@@ -6,7 +6,7 @@
 /**
  *  Parsing /etc/passwd file and create a list with User records
  */
-package com.paas.services;
+package com.paas.services.parser;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -19,7 +19,7 @@ import com.paas.PaaSApplicationException;
 import com.paas.model.User;
 
 @Service
-public class PasswdFileParser implements FileParseService<User> {
+public class PasswdRecordsParser implements RecordsParser<User> {
 	
 	private final int NAME = 0;
 	private final int UID = 2;
@@ -50,11 +50,11 @@ public class PasswdFileParser implements FileParseService<User> {
 				users.add(user);
 			}
 		} catch (PatternSyntaxException pe) {
-			throw new PaaSApplicationException(PasswdFileParser.class, "Regular expression syntax error");
+			throw new PaaSApplicationException(PasswdRecordsParser.class, "Regular expression syntax error");
 		} catch (NumberFormatException ne) {
-			throw new PaaSApplicationException(PasswdFileParser.class, "Fail to parse group id");
+			throw new PaaSApplicationException(PasswdRecordsParser.class, "Fail to parse group id");
 		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new PaaSApplicationException(PasswdFileParser.class,
+			throw new PaaSApplicationException(PasswdRecordsParser.class,
 					"File record parse error. Array index is out of bounds");
 		}
 		return users;

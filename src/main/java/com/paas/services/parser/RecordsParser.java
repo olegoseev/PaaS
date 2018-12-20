@@ -7,11 +7,11 @@
 /**
  *  File parse service interface
  */
-package com.paas.services;
+package com.paas.services.parser;
 
 import java.util.List;
 
-public interface FileParseService<MODEL> {
+public interface RecordsParser<MODEL> {
 	/**
 	 * Parse a file
 	 * 

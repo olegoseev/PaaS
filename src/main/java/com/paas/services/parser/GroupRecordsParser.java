@@ -7,7 +7,7 @@
 /**
  *  Parsing /etc/group file and create a list with Group objects
  */
-package com.paas.services;
+package com.paas.services.parser;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,7 +21,7 @@ import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
 
 @Service
-public class GroupFileParser implements FileParseService<Group> {
+public class GroupRecordsParser implements RecordsParser<Group> {
 
 	private final int NAME = 0;
 	private final int GID = 2;
@@ -53,11 +53,11 @@ public class GroupFileParser implements FileParseService<Group> {
 				groups.add(group);
 			}
 		} catch (PatternSyntaxException pe) {
-			throw new PaaSApplicationException(GroupFileParser.class, "Regular expression syntax error");
+			throw new PaaSApplicationException(GroupRecordsParser.class, "Regular expression syntax error");
 		} catch (NumberFormatException ne) {
-			throw new PaaSApplicationException(GroupFileParser.class, "Fail to parse group id");
+			throw new PaaSApplicationException(GroupRecordsParser.class, "Fail to parse group id");
 		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new PaaSApplicationException(GroupFileParser.class,
+			throw new PaaSApplicationException(GroupRecordsParser.class,
 					"File record parse error. Array index is out of bounds");
 		}
 
@@ -81,9 +81,9 @@ public class GroupFileParser implements FileParseService<Group> {
 			members = new LinkedList<>(Arrays.asList(parts));
 
 		} catch (PatternSyntaxException pe) {
-			throw new PaaSApplicationException(GroupFileParser.class, "Regular expression syntax error");
+			throw new PaaSApplicationException(GroupRecordsParser.class, "Regular expression syntax error");
 		} catch (NullPointerException ne) {
-			throw new PaaSApplicationException(GroupFileParser.class, "Fail to create a members group list");
+			throw new PaaSApplicationException(GroupRecordsParser.class, "Fail to create a members group list");
 		}
 
 		return members;

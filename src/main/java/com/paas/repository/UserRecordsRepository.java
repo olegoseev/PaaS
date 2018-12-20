@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.paas.model.User;
 import com.paas.repository.dao.UserRecordsDataReader;
-import com.paas.services.UserRecordsFilter;
+import com.paas.services.filter.UserRecordsFilter;
 
 @Repository
 public class UserRecordsRepository extends BaseRepositoryImpl<Integer, User> {

@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
+import com.paas.services.parser.GroupRecordsParser;
 import com.paas.utils.FileReader;
 import com.paas.utils.StringToPath;
 
@@ -37,7 +38,7 @@ public class TestGroupFileParser {
 	@Test
 	public void testGetMembers() {
 
-		GroupFileParser parser = new GroupFileParser();
+		GroupRecordsParser parser = new GroupRecordsParser();
 
 		Path path = StringToPath.getPath(groupFile);
 
@@ -55,7 +56,7 @@ public class TestGroupFileParser {
 	@Test
 	public void testParse() {
 
-		GroupFileParser parser = new GroupFileParser();
+		GroupRecordsParser parser = new GroupRecordsParser();
 
 		Path path = StringToPath.getPath(groupFile);
 
@@ -73,7 +74,7 @@ public class TestGroupFileParser {
 	public void fileParseErrorExceptionThrown() {
 
 		Assertions.assertThrows(PaaSApplicationException.class, () -> {
-			GroupFileParser parser = new GroupFileParser();
+			GroupRecordsParser parser = new GroupRecordsParser();
 			Path path = StringToPath.getPath(dummyFile);
 
 			FileReader fr = new FileReader();

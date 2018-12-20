@@ -1,4 +1,4 @@
-package com.paas.services;
+package com.paas.services.filter;
 
 import java.util.Collections;
 import java.util.List;

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
 import com.paas.services.FileSystemWatchService;
-import com.paas.services.GroupFileParser;
+import com.paas.services.parser.GroupRecordsParser;
 
 @Service
 public class GroupRecordsDataReader extends DataReader<Group> {
@@ -21,7 +21,7 @@ public class GroupRecordsDataReader extends DataReader<Group> {
 	private String path;
 
 	@Autowired
-	GroupFileParser parser;
+	GroupRecordsParser parser;
 
 	@Autowired
 	private FileSystemWatchService watcher;

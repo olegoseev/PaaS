@@ -12,8 +12,8 @@ import com.paas.controller.rest.GroupRestController;
 import com.paas.controller.rest.UserRestController;
 import com.paas.repository.GroupRecordsRepository;
 import com.paas.repository.UserRecordsRepository;
-import com.paas.services.GroupFileParser;
-import com.paas.services.PasswdFileParser;
+import com.paas.services.parser.GroupRecordsParser;
+import com.paas.services.parser.PasswdRecordsParser;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,10 +26,10 @@ public class SmokeTest {
 	private GroupRestController groupController;
 	
 	@Autowired
-	private GroupFileParser groupParser;
+	private GroupRecordsParser groupParser;
 	
 	@Autowired 
-	private PasswdFileParser userParser;
+	private PasswdRecordsParser userParser;
 	
 	@Autowired
 	private GroupRecordsRepository groupRepo;

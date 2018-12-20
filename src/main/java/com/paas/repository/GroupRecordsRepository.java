@@ -11,7 +11,7 @@ import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
 import com.paas.model.User;
 import com.paas.repository.dao.GroupRecordsDataReader;
-import com.paas.services.GroupRecordsFilter;
+import com.paas.services.filter.GroupRecordsFilter;
 import com.paas.utils.Utils;
 
 @Repository

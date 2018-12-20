@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.paas.PaaSApplicationException;
 import com.paas.model.User;
 import com.paas.services.FileSystemWatchService;
-import com.paas.services.PasswdFileParser;
+import com.paas.services.parser.PasswdRecordsParser;
 
 @Service
 public class UserRecordsDataReader extends DataReader<User> {
@@ -21,7 +21,7 @@ public class UserRecordsDataReader extends DataReader<User> {
 	private String path;
 
 	@Autowired
-	private PasswdFileParser parser;
+	private PasswdRecordsParser parser;
 
 	@Autowired
 	private FileSystemWatchService watcher;

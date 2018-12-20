@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.paas.model.Group;
 import com.paas.repository.dao.GroupRecordsDataReader;
-import com.paas.services.GroupRecordsFilter;
+import com.paas.services.filter.GroupRecordsFilter;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

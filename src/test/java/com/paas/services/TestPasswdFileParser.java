@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.paas.PaaSApplicationException;
 import com.paas.model.User;
+import com.paas.services.parser.PasswdRecordsParser;
 import com.paas.utils.FileReader;
 import com.paas.utils.StringToPath;
 
@@ -38,7 +39,7 @@ public class TestPasswdFileParser {
 	@Test
 	public void testParse() {
 
-		PasswdFileParser parser = new PasswdFileParser();
+		PasswdRecordsParser parser = new PasswdRecordsParser();
 
 		Path path = StringToPath.getPath(userFile);
 
@@ -57,7 +58,7 @@ public class TestPasswdFileParser {
 	public void fileParseErrorExceptionThrown() {
 
 		Assertions.assertThrows(PaaSApplicationException.class, () -> {
-			PasswdFileParser parser = new PasswdFileParser();
+			PasswdRecordsParser parser = new PasswdRecordsParser();
 
 			Path path = StringToPath.getPath(dummyFile);
 
