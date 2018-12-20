@@ -28,11 +28,10 @@ import static com.paas.model.ModelDefaults.*;
 public class UserRestController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserRestController.class);
-	// User repository
+
 	@Autowired
 	private UserRecordsRepository userRepository;
 
-	// Group repository
 	@Autowired
 	private GroupRecordsRepository groupRepository;
 
