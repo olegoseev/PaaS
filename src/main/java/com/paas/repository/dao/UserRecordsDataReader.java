@@ -40,7 +40,7 @@ public class UserRecordsDataReader extends DataReader<User> {
 	}
 
 	@Override
-	List<User> getRecords() {
+	List<User> getRecords() throws PaaSApplicationException {
 		return parser.parseRecords(records);
 	}
 }

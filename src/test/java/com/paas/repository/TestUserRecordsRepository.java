@@ -14,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.paas.PaaSApplicationException;
 import com.paas.model.User;
 
 @RunWith(SpringRunner.class)
@@ -34,13 +35,13 @@ public class TestUserRecordsRepository {
 	private String realFile;
 
 	@Test
-	public void testFindAll() {
+	public void testFindAll() throws PaaSApplicationException {
 		List<User> list = repo.findAll();
 		Assertions.assertEquals(10, list.size(), "findAll user records");
 	}
 
 	@Test
-	public void testFindAny() {
+	public void testFindAny() throws PaaSApplicationException {
 		User user = new User();
 
 		user.setName("tstnews");
@@ -53,7 +54,7 @@ public class TestUserRecordsRepository {
 	}
 
 	@Test
-	public void testFindBy() {
+	public void testFindBy() throws PaaSApplicationException {
 		// let's check user games
 		// games:x:5:60:games:/usr/games:/usr/sbin/nologin
 		User actualUser = repo.findBy(5);

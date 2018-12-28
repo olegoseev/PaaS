@@ -18,7 +18,7 @@ import com.paas.PaaSApplicationException;
 
 public class StringToPath {
 
-	public static Path getPath(String pathToFile) {
+	public static Path getPath(String pathToFile) throws PaaSApplicationException {
 
 		try {
 			Path path = Paths.get(pathToFile);

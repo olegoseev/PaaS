@@ -13,6 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.paas.PaaSApplicationException;
 import com.paas.model.User;
 import com.paas.repository.dao.UserRecordsDataReader;
 import com.paas.services.filter.UserRecordsFilter;
@@ -29,7 +30,7 @@ public class TestUserRecordsFilter {
 	UserRecordsDataReader reader;
 	
 	@Test
-	public void testApplyFor() {
+	public void testApplyFor() throws PaaSApplicationException {
 		
 		// man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
 		User user = new User();

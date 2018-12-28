@@ -80,28 +80,34 @@ public class FileSystemWatchService {
 	private void processEvents() throws PaaSApplicationException {
 		executor.submit(() -> {
 
-			Path path = StringToPath.getPath(filteToWatch);
-			Path dir = path.getParent();
+			try {
 
-			while (true) {
-				final WatchKey key;
-				try {
-					key = watcher.take(); // wait for a key to be available
-				} catch (InterruptedException ex) {
-					return;
-				}
+				Path path = StringToPath.getPath(filteToWatch);
+				Path dir = path.getParent();
 
-				key.pollEvents().stream().filter(e -> (e.kind() != OVERFLOW)).map(e -> ((WatchEvent<Path>) e).context())
-						.forEach(p -> {
-							final Path absPath = dir.resolve(p);
-							if (absPath.equals(path)) {
-								notifySubscriber();
-							}
-						});
-				boolean valid = key.reset(); // IMPORTANT: The key must be reset after processed
-				if (!valid) {
-					break;
+				while (true) {
+					final WatchKey key;
+					try {
+						key = watcher.take(); // wait for a key to be available
+					} catch (InterruptedException ex) {
+						return;
+					}
+
+					key.pollEvents().stream().filter(e -> (e.kind() != OVERFLOW))
+							.map(e -> ((WatchEvent<Path>) e).context()).forEach(p -> {
+								final Path absPath = dir.resolve(p);
+								if (absPath.equals(path)) {
+									notifySubscriber();
+								}
+							});
+					boolean valid = key.reset(); // IMPORTANT: The key must be reset after processed
+					if (!valid) {
+						break;
+					}
 				}
+			} catch (PaaSApplicationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		});
 	}

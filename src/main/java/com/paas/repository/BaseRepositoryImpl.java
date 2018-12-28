@@ -2,6 +2,7 @@ package com.paas.repository;
 
 import java.util.List;
 
+import com.paas.PaaSApplicationException;
 import com.paas.repository.dao.DataReader;
 import com.paas.services.filter.RecordsFilter;
 
@@ -16,11 +17,11 @@ public abstract class BaseRepositoryImpl <PK, MODEL> implements BaseRepository<P
 		this.filter = filter;
 	}
 	
-	public List<MODEL> findAll() {
+	public List<MODEL> findAll() throws PaaSApplicationException {
 		return reader.readData();
 	}
 
-	public List<MODEL> findAny(MODEL modelToMatch) {
+	public List<MODEL> findAny(MODEL modelToMatch) throws PaaSApplicationException {
 		List<MODEL> models = findAll();
 		return applyFilter(modelToMatch, models);
 	}
@@ -30,7 +31,7 @@ public abstract class BaseRepositoryImpl <PK, MODEL> implements BaseRepository<P
 		return filter.applyFor(models);
 	}
 	
-	public MODEL findBy(PK pk) {
+	public MODEL findBy(PK pk) throws PaaSApplicationException {
 		List<MODEL> models = findAll();
 		return filterByPk(pk, models);
 	}

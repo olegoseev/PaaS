@@ -37,7 +37,7 @@ public class TestPasswdFileParser {
 	private String dummyFile;
 
 	@Test
-	public void testParse() {
+	public void testParse() throws PaaSApplicationException {
 
 		PasswdRecordsParser parser = new PasswdRecordsParser();
 

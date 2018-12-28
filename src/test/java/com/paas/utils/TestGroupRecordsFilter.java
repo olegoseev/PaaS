@@ -14,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
 import com.paas.repository.dao.GroupRecordsDataReader;
 import com.paas.services.filter.GroupRecordsFilter;
@@ -29,7 +30,7 @@ public class TestGroupRecordsFilter {
 	GroupRecordsDataReader reader;
 
 	@Test
-	public void testApplyFor() {
+	public void testApplyFor() throws PaaSApplicationException {
 
 		// daemon:x:1:member1,member2,member3
 		Group group = new Group();

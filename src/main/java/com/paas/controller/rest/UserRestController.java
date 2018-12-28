@@ -155,8 +155,9 @@ public class UserRestController {
 	 * 
 	 * @param map
 	 * @return User object
+	 * @throws PaaSApplicationException 
 	 */
-	private User makeUserFromMap(Map<String, String> map) {
+	private User makeUserFromMap(Map<String, String> map) throws PaaSApplicationException {
 
 		try {
 			User user = new User();

@@ -36,7 +36,7 @@ public class TestGroupFileParser {
 	private String dummyFile;
 
 	@Test
-	public void testGetMembers() {
+	public void testGetMembers() throws PaaSApplicationException {
 
 		GroupRecordsParser parser = new GroupRecordsParser();
 
@@ -54,7 +54,7 @@ public class TestGroupFileParser {
 	}
 
 	@Test
-	public void testParse() {
+	public void testParse() throws PaaSApplicationException {
 
 		GroupRecordsParser parser = new GroupRecordsParser();
 

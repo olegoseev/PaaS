@@ -118,8 +118,9 @@ public class GroupRestController {
 	 * 
 	 * @param map
 	 * @return User object
+	 * @throws PaaSApplicationException 
 	 */
-	private Group makeGroupFromMap(MultiValueMap<String, String> map) {
+	private Group makeGroupFromMap(MultiValueMap<String, String> map) throws PaaSApplicationException {
 		try {
 			Group group = new Group();
 			String name = extractGroupName(map);

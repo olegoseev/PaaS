@@ -19,6 +19,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
 import com.paas.model.User;
 
@@ -40,7 +41,7 @@ public class TestGroupRecordsRepository {
 	private GroupRecordsRepository repo;
 
 	@Test
-	public void testFindAll() {
+	public void testFindAll() throws PaaSApplicationException {
 		List<Group> list = repo.findAll();
 		// the list should have total 7 records
 		Assertions.assertEquals(7, list.size(), "findAll user records");
@@ -56,7 +57,7 @@ public class TestGroupRecordsRepository {
 	}
 
 	@Test
-	public void testFindAny() {
+	public void testFindAny() throws PaaSApplicationException {
 		// test for group: daemon:x:1:member1,member2,member3
 		Group group = new Group();
 
@@ -72,7 +73,7 @@ public class TestGroupRecordsRepository {
 	}
 
 	@Test
-	public void testFindBy() {
+	public void testFindBy() throws PaaSApplicationException {
 		// test for group: daemon:x:1:member1,member2,member3
 		List<String> members = getMembers();
 
@@ -86,7 +87,7 @@ public class TestGroupRecordsRepository {
 	}
 
 	@Test
-	public void testFindAllGroupsForUser() {
+	public void testFindAllGroupsForUser() throws PaaSApplicationException {
 		// user sys should appears in two groups
 		// sys:x:3:sys
 		// adm:x:4:sys

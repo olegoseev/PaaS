@@ -3,7 +3,7 @@ package com.paas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PaaSApplicationException extends RuntimeException {
+public class PaaSApplicationException extends Exception {
 
 	private static final long serialVersionUID = 4650037236983286671L;
 

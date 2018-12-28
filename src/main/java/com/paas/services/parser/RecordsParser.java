@@ -11,12 +11,15 @@ package com.paas.services.parser;
 
 import java.util.List;
 
+import com.paas.PaaSApplicationException;
+
 public interface RecordsParser<MODEL> {
 	/**
 	 * Parse a file
 	 * 
 	 * @param value path to the file
 	 * @return the list of objects
+	 * @throws PaaSApplicationException 
 	 */
-	List<MODEL> parseRecords(List<String> records);
+	List<MODEL> parseRecords(List<String> records) throws PaaSApplicationException;
 }

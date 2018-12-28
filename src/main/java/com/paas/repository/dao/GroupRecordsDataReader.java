@@ -40,7 +40,7 @@ public class GroupRecordsDataReader extends DataReader<Group> {
 	}
 
 	@Override
-	List<Group> getRecords() {
+	List<Group> getRecords() throws PaaSApplicationException {
 		return parser.parseRecords(records);
 	}
 

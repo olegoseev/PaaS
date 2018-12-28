@@ -15,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.paas.PaaSApplicationException;
 import com.paas.model.User;
 
 @RunWith(SpringRunner.class)
@@ -34,7 +35,7 @@ public class TestUserRecordsDataReader {
 	UserRecordsDataReader dataReader;
 	
 	@Test
-	public void testReadData() {
+	public void testReadData() throws PaaSApplicationException {
 		ReflectionTestUtils.setField(dataReader, "path", realFile);
 		List<User> records = dataReader.readData();
 		Assertions.assertEquals(10, records.size(), "read user records from file");
