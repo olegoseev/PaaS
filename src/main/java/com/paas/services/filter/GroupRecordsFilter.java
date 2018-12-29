@@ -26,34 +26,34 @@ public class GroupRecordsFilter extends RecordsFilter<Group> {
 
 	private void groupNameFilter() {
 		if (isGroupNameInCriteria()) {
-			dataRecords = dataRecords.stream().filter(g -> g.getName().equals(filterCriteria.getName()))
+			dataRecords = dataRecords.stream().filter(g -> g.getName().equals(template.getName()))
 					.collect(Collectors.toList());
 		}
 	}
 
 	private boolean isGroupNameInCriteria() {
-		return filterCriteria.getName().isBlank() == false;
+		return template.getName().isBlank() == false;
 	}
 
 	private void groupGidFilter() {
 		if (isGroupGidInCriteria()) {
-			dataRecords = dataRecords.stream().filter(g -> g.getGid() == filterCriteria.getGid())
+			dataRecords = dataRecords.stream().filter(g -> g.getGid() == template.getGid())
 					.collect(Collectors.toList());
 		}
 	}
 
 	private boolean isGroupGidInCriteria() {
-		return filterCriteria.getGid() != GID_NOT_DEFINED;
+		return template.getGid() != GID_NOT_DEFINED;
 	}
 
 	private void groupMembers() {
 		if (isGroupMembersInCriteria()) {
-			dataRecords = dataRecords.stream().filter(g -> g.getMembers().containsAll(filterCriteria.getMembers()))
+			dataRecords = dataRecords.stream().filter(g -> g.getMembers().containsAll(template.getMembers()))
 					.collect(Collectors.toList());
 		}
 	}
 
 	private boolean isGroupMembersInCriteria() {
-		return filterCriteria.getMembers().isEmpty() == false;
+		return template.getMembers().isEmpty() == false;
 	}
 }
