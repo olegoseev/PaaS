@@ -11,18 +11,23 @@ import com.paas.PaaSApplicationException;
 import com.paas.model.Group;
 import com.paas.model.User;
 import com.paas.repository.dao.GroupRecordsDataReader;
-import com.paas.services.filter.GroupRecordsFilter;
+import com.paas.services.filter.GroupFilter;
+import com.paas.services.filter.GroupFilter.Builder;
 import com.paas.utils.Utils;
 
 @Repository
 public class GroupRecordsRepository extends BaseRepositoryImpl<Integer, Group> {
 
-	
 	@Autowired
-	public GroupRecordsRepository(GroupRecordsDataReader reader,
-									GroupRecordsFilter filter) {
-		super(reader, filter);
+	GroupRecordsDataReader reader;
 
+	@Autowired
+	GroupFilter filter;
+
+	@Override
+	protected List<Group> applyFilter(List<Group> records, Group criteria) {
+		GroupFilter gf = Builder.newInstance().setCriteria(criteria).build();
+		return gf.apply(records);
 	}
 
 	Group filterByPk(Integer id, List<Group> groups) {
@@ -51,4 +56,10 @@ public class GroupRecordsRepository extends BaseRepositoryImpl<Integer, Group> {
 	private List<Group> findGroupsUserMemberOf(List<Group> groups, String name) {
 		return groups.stream().filter(g -> (g.getMembers().contains(name))).collect(Collectors.toList());
 	}
+
+	@Override
+	public List<Group> findAll() throws PaaSApplicationException {
+		return reader.readData();
+	}
+
 }

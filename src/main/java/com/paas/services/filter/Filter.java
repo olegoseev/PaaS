@@ -2,13 +2,9 @@ package com.paas.services.filter;
 
 import java.util.List;
 
-abstract public class Filter<MODEL> {
+public interface Filter<T> {
 
-	protected MODEL model;
+	public void setNextFilter(Filter<T> filter);
 
-	public Filter(MODEL model) {
-		this.model = model;
-	}
-
-	abstract public List<MODEL> apply(List<MODEL> records);
+	public List<T> meet(List<T> records, T template);
 }

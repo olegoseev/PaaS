@@ -13,10 +13,10 @@ import java.util.List;
 
 import com.paas.PaaSApplicationException;
 
-public interface BaseRepository<PK, MODEL> {
-	public List<MODEL> findAll() throws PaaSApplicationException;
+public interface BaseRepository<PK, T> {
+	public List<T> findAll() throws PaaSApplicationException;
 
-	public List<MODEL> findAny(MODEL model) throws PaaSApplicationException;
+	public List<T> findAny(T model) throws PaaSApplicationException;
 
-	MODEL findBy(PK pk) throws PaaSApplicationException;
+	T findBy(PK pk) throws PaaSApplicationException;
 }

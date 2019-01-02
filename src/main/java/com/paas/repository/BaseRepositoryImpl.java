@@ -3,38 +3,22 @@ package com.paas.repository;
 import java.util.List;
 
 import com.paas.PaaSApplicationException;
-import com.paas.repository.dao.DataReader;
-import com.paas.services.filter.RecordsFilter;
 
-public abstract class BaseRepositoryImpl <PK, MODEL> implements BaseRepository<PK, MODEL> {
-	
-	protected DataReader<MODEL> reader;
-	
-	protected RecordsFilter<MODEL> filter;
-	
-	public BaseRepositoryImpl(DataReader<MODEL> reader, RecordsFilter<MODEL> filter) {
-		this.reader = reader;
-		this.filter = filter;
-	}
-	
-	public List<MODEL> findAll() throws PaaSApplicationException {
-		return reader.readData();
+public abstract class BaseRepositoryImpl<PK, T> implements BaseRepository<PK, T> {
+
+	public abstract List<T> findAll() throws PaaSApplicationException;
+
+	public List<T> findAny(T criteria) throws PaaSApplicationException {
+		List<T> records = findAll();
+		return applyFilter(records, criteria);
 	}
 
-	public List<MODEL> findAny(MODEL modelToMatch) throws PaaSApplicationException {
-		List<MODEL> models = findAll();
-		return applyFilter(modelToMatch, models);
+	protected abstract List<T> applyFilter(List<T> records, T criteria);
+
+	public T findBy(PK pk) throws PaaSApplicationException {
+		List<T> records = findAll();
+		return filterByPk(pk, records);
 	}
 
-	List<MODEL> applyFilter(MODEL modelToMatch, List<MODEL> models) {
-		filter.setCriteria(modelToMatch);
-		return filter.applyFor(models);
-	}
-	
-	public MODEL findBy(PK pk) throws PaaSApplicationException {
-		List<MODEL> models = findAll();
-		return filterByPk(pk, models);
-	}
-	
-	abstract MODEL filterByPk(PK pk, List<MODEL> models);
+	abstract T filterByPk(PK pk, List<T> records);
 }
