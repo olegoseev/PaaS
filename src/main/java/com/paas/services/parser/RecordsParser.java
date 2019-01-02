@@ -13,7 +13,7 @@ import java.util.List;
 
 import com.paas.PaaSApplicationException;
 
-public interface RecordsParser<MODEL> {
+public interface RecordsParser<T> {
 	/**
 	 * Parse a file
 	 * 
@@ -21,5 +21,5 @@ public interface RecordsParser<MODEL> {
 	 * @return the list of objects
 	 * @throws PaaSApplicationException 
 	 */
-	List<MODEL> parseRecords(List<String> records) throws PaaSApplicationException;
+	List<T> parseRecords(List<String> records) throws PaaSApplicationException;
 }

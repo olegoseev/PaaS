@@ -10,7 +10,6 @@
  */
 package com.paas.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,20 +26,14 @@ public class Utils {
 	public static <T> List<T> concatenateTwoLists(List<T> list1, List<T> list2) {
 
 		if (list1.isEmpty()) {
-			return newListFromList(list2);
+			return list2;
 		}
 
 		if (list2.isEmpty()) {
-			return newListFromList(list1);
+			return list1;
 		}
 
 		List<T> list = Stream.of(list1, list2).flatMap(List::stream).distinct().collect(Collectors.toList());
 		return list;
-	}
-
-	private static <T> List<T> newListFromList(List<T> list) {
-		List<T> al = new ArrayList<>();
-		al.addAll(list);
-		return al;
 	}
 }
