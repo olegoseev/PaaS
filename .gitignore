@@ -21,8 +21,6 @@ bin/
 .apt_generated
 .factorypath
 .springBeans
-.classpath
-.project
 .settings/
 .sts4-cache/
 .attach_pid*
