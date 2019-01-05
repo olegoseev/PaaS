@@ -21,9 +21,6 @@ public class GroupRecordsRepository extends BaseRepositoryImpl<Integer, Group> {
 	@Autowired
 	GroupRecordsDataReader reader;
 
-	@Autowired
-	GroupFilter filter;
-
 	@Override
 	protected List<Group> applyFilter(List<Group> records, Group criteria) {
 		GroupFilter gf = Builder.newInstance().setCriteria(criteria).build();

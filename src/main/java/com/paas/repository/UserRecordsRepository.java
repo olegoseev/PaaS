@@ -18,9 +18,6 @@ public class UserRecordsRepository extends BaseRepositoryImpl<Integer, User> {
 	@Autowired
 	UserRecordsDataReader reader;
 
-	@Autowired
-	UserFilter filter;
-
 	User filterByPk(Integer id, List<User> users) {
 		Optional<User> user = users.stream().filter(u -> u.getUid() == id).findFirst();
 
