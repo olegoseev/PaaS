@@ -38,7 +38,7 @@ public class UserRestController {
 	/**
 	 * Entry point to get all users
 	 * 
-	 * @return json success/error
+	 * @return JSON success/error
 	 */
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	@ResponseBody
@@ -49,14 +49,14 @@ public class UserRestController {
 
 			// In case of empty list returned sending NO.CONTENT to client
 			if (users == null || users.isEmpty()) {
-				return new ResponseEntity<Object>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
 			}
 
-			return new ResponseEntity<Object>(AppResponse.successResult(users), HttpStatus.OK);
+			return new ResponseEntity<>(AppResponse.successResult(users), HttpStatus.OK);
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -65,7 +65,7 @@ public class UserRestController {
 	 * Entry point to get a user record by user Id
 	 * 
 	 * @param id UID
-	 * @return json success/error
+	 * @return JSON success/error
 	 */
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
 	@ResponseBody
@@ -75,14 +75,14 @@ public class UserRestController {
 
 			User user = userRepository.findBy(id);
 			if (user == null) {
-				return new ResponseEntity<Object>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
 			}
 
-			return new ResponseEntity<Object>(AppResponse.successResult(user), HttpStatus.OK);
+			return new ResponseEntity<>(AppResponse.successResult(user), HttpStatus.OK);
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -91,7 +91,7 @@ public class UserRestController {
 	 * Entry point to get all the groups for a user by user id
 	 * 
 	 * @param id UID
-	 * @return json success/error
+	 * @return JSON success/error
 	 */
 	@RequestMapping(value = "/users/{id}/groups", method = RequestMethod.GET)
 	@ResponseBody
@@ -101,20 +101,20 @@ public class UserRestController {
 			User user = userRepository.findBy(id);
 
 			if (user == null) {
-				return new ResponseEntity<Object>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
 			}
 
 			List<Group> groups = groupRepository.findAllGroupsForUser(user);
 
 			if (groups == null) {
-				return new ResponseEntity<Object>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
 			}
 
-			return new ResponseEntity<Object>(AppResponse.successResult(groups), HttpStatus.OK);
+			return new ResponseEntity<>(AppResponse.successResult(groups), HttpStatus.OK);
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -124,7 +124,7 @@ public class UserRestController {
 	 * should have at least one parameter.
 	 * 
 	 * @param queryMap name, uid, gid, comment, home, shell
-	 * @return json success/error
+	 * @return JSON success/error
 	 */
 	@RequestMapping(value = "/users/query", method = RequestMethod.GET)
 	@ResponseBody
@@ -137,14 +137,14 @@ public class UserRestController {
 			List<User> users = userRepository.findAny(user);
 
 			if (users.isEmpty()) {
-				return new ResponseEntity<Object>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(AppResponse.errorUserNotFound(), HttpStatus.NOT_FOUND);
 			}
 
-			return new ResponseEntity<Object>(AppResponse.successResult(users), HttpStatus.OK);
+			return new ResponseEntity<>(AppResponse.successResult(users), HttpStatus.OK);
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

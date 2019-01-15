@@ -23,7 +23,7 @@ import com.paas.services.filter.GroupFilter;
 @ActiveProfiles("test")
 public class TestGroupFilter {
 
-	private static List<Group> records = new ArrayList<>();
+	private static final List<Group> records = new ArrayList<>();
 
 	@BeforeAll
 	public static void init() {
@@ -33,7 +33,7 @@ public class TestGroupFilter {
 		Group groupA = new Group();
 		groupA.setName("groupA");
 		groupA.setGid(1);
-		groupA.setMembers(new ArrayList<String>(Arrays.asList(ma)));
+		groupA.setMembers(new ArrayList<>(Arrays.asList(ma)));
 
 		records.add(groupA);
 
@@ -42,7 +42,7 @@ public class TestGroupFilter {
 		Group groupB = new Group();
 		groupB.setName("groupB");
 		groupB.setGid(2);
-		groupB.setMembers(new ArrayList<String>(Arrays.asList(mb)));
+		groupB.setMembers(new ArrayList<>(Arrays.asList(mb)));
 
 		records.add(groupB);
 
@@ -51,7 +51,7 @@ public class TestGroupFilter {
 		Group groupC = new Group();
 		groupC.setName("groupC");
 		groupC.setGid(3);
-		groupC.setMembers(new ArrayList<String>(Arrays.asList(mc)));
+		groupC.setMembers(new ArrayList<>(Arrays.asList(mc)));
 
 		records.add(groupC);
 
@@ -60,7 +60,7 @@ public class TestGroupFilter {
 		Group groupD = new Group();
 		groupD.setName("groupD");
 		groupD.setGid(4);
-		groupD.setMembers(new ArrayList<String>(Arrays.asList(md)));
+		groupD.setMembers(new ArrayList<>(Arrays.asList(md)));
 
 		records.add(groupD);
 	}
@@ -81,7 +81,7 @@ public class TestGroupFilter {
 		Group group = new Group();
 		group.setName("groupA");
 		group.setGid(1);
-		group.setMembers(new ArrayList<String>(Arrays.asList(ma)));
+		group.setMembers(new ArrayList<>(Arrays.asList(ma)));
 
 		Assertions.assertEquals(group, result.get(0), "Should get groupA");
 	}
@@ -101,7 +101,7 @@ public class TestGroupFilter {
 		Group group = new Group();
 		group.setName("groupC");
 		group.setGid(3);
-		group.setMembers(new ArrayList<String>(Arrays.asList(mc)));
+		group.setMembers(new ArrayList<>(Arrays.asList(mc)));
 
 		Assertions.assertEquals(group, result.get(0), "Should get groupC");
 	}
@@ -111,7 +111,7 @@ public class TestGroupFilter {
 		String[] md = { "member1", "member2", "member3", "member4" };
 
 		Group criteria = new Group();
-		criteria.setMembers(new ArrayList<String>(Arrays.asList(md)));
+		criteria.setMembers(new ArrayList<>(Arrays.asList(md)));
 
 		GroupFilter gf = GroupFilter.Builder.newInstance().setCriteria(criteria).build();
 		List<Group> result = gf.apply(records);
@@ -121,7 +121,7 @@ public class TestGroupFilter {
 		Group group = new Group();
 		group.setName("groupD");
 		group.setGid(4);
-		group.setMembers(new ArrayList<String>(Arrays.asList(md)));
+		group.setMembers(new ArrayList<>(Arrays.asList(md)));
 
 		Assertions.assertEquals(group, result.get(0), "Should get groupD");
 	}
@@ -133,7 +133,7 @@ public class TestGroupFilter {
 		Group criteria = new Group();
 		criteria.setName("groupB");
 		criteria.setGid(2);
-		criteria.setMembers(new ArrayList<String>(Arrays.asList(mb)));
+		criteria.setMembers(new ArrayList<>(Arrays.asList(mb)));
 
 		GroupFilter gf = GroupFilter.Builder.newInstance().setCriteria(criteria).build();
 		List<Group> result = gf.apply(records);
@@ -143,7 +143,7 @@ public class TestGroupFilter {
 		Group group = new Group();
 		group.setName("groupB");
 		group.setGid(2);
-		group.setMembers(new ArrayList<String>(Arrays.asList(mb)));
+		group.setMembers(new ArrayList<>(Arrays.asList(mb)));
 
 		Assertions.assertEquals(group, result.get(0), "Should get groupB");
 	}
@@ -154,7 +154,7 @@ public class TestGroupFilter {
 
 		Group criteria = new Group();
 		criteria.setGid(3);
-		criteria.setMembers(new ArrayList<String>(Arrays.asList(mc)));
+		criteria.setMembers(new ArrayList<>(Arrays.asList(mc)));
 
 		GroupFilter gf = GroupFilter.Builder.newInstance().setCriteria(criteria).build();
 		List<Group> result = gf.apply(records);
@@ -164,7 +164,7 @@ public class TestGroupFilter {
 		Group group = new Group();
 		group.setName("groupC");
 		group.setGid(3);
-		group.setMembers(new ArrayList<String>(Arrays.asList(mc)));
+		group.setMembers(new ArrayList<>(Arrays.asList(mc)));
 
 		Assertions.assertEquals(group, result.get(0), "Should get groupC");
 	}

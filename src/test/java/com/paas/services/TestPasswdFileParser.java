@@ -49,7 +49,7 @@ public class TestPasswdFileParser {
 
 		List<User> list = parser.parseRecords(records);
 
-		Assertions.assertEquals(list.size(), 10, "passwd file loading and parsing test");
+		Assertions.assertEquals(10, list.size(), "passwd file loading and parsing test");
 
 	}
 
@@ -57,17 +57,17 @@ public class TestPasswdFileParser {
 	@Test
 	public void fileParseErrorExceptionThrown() {
 
-		Assertions.assertThrows(PaaSApplicationException.class, () -> {
-			PasswdRecordsParser parser = new PasswdRecordsParser();
-
-			Path path = StringToPath.getPath(dummyFile);
-
-			FileReader fr = new FileReader();
-
-			List<String> records = fr.readFileInList(path);
-
-			List<User> list = parser.parseRecords(records);
-
-		});
+        PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
+            PasswdRecordsParser parser = new PasswdRecordsParser();
+            
+            Path path = StringToPath.getPath(dummyFile);
+            
+            FileReader fr = new FileReader();
+            
+            List<String> records = fr.readFileInList(path);
+            
+            List<User> list = parser.parseRecords(records);
+            
+        });
 	}
 }

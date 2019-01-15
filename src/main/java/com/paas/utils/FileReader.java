@@ -25,6 +25,8 @@ public class FileReader {
 	 * Read whole file and returns a list with file lines
 	 * 
 	 * @param path to file
+        * @return 
+        * @throws com.paas.PaaSApplicationException
 	 */
 	public List<String> readFileInList(Path path) throws PaaSApplicationException {
 

@@ -53,9 +53,7 @@ public class TestReadFileInList {
 			List<String> list = fileReader.readFileInList(path);
 
 			assertEquals(list.size(), 10, "passwd file loading test");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (PaaSApplicationException e) {
+		} catch (FileNotFoundException | PaaSApplicationException e) {
 			e.printStackTrace();
 		}
 	}
@@ -64,10 +62,10 @@ public class TestReadFileInList {
 	@Test
 	public void fileReadErrorExceptionThrown() {
 
-		Assertions.assertThrows(PaaSApplicationException.class, () -> {
-			File file = ResourceUtils.getFile(dummyFile);
-			Path path = Paths.get(file.getAbsolutePath());
-			List<String> list = fileReader.readFileInList(path);
-		});
+        PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
+            File file = ResourceUtils.getFile(dummyFile);
+            Path path = Paths.get(file.getAbsolutePath());
+            List<String> list = fileReader.readFileInList(path);
+        });
 	}
 }

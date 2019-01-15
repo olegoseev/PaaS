@@ -33,7 +33,7 @@ public class TestGroupRestController {
 		this.mockMvc.perform(get("/groups"))
 					.andExpect(status().isOk())
 					.andExpect(content().contentType("application/json;charset=UTF-8"))
-					.andExpect(content().json("{'status': 'OK','success':'OK'}"));;
+					.andExpect(content().json("{'status': 'OK','success':'OK'}"));
 	}
 
 	

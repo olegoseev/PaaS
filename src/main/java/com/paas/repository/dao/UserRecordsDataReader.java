@@ -35,7 +35,7 @@ public class UserRecordsDataReader extends DataReader<User> {
 			watcher.setSubsciber(this);
 			watcher.startWatchService();
 		} catch (PaaSApplicationException pe) {
-			pe.printStackTrace();
+                    // TODO: add logging
 		}
 	}
 

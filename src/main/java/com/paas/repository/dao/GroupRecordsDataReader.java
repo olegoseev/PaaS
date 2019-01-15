@@ -35,7 +35,7 @@ public class GroupRecordsDataReader extends DataReader<Group> {
 			watcher.setSubsciber(this);
 			watcher.startWatchService();
 		} catch (PaaSApplicationException pe) {
-			pe.printStackTrace();
+                    //TODO: add logging
 		}
 	}
 

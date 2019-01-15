@@ -34,7 +34,7 @@ public class GroupRestController {
 	/**
 	 * Entry point to get all the groups
 	 * 
-	 * @return json success/error
+	 * @return JSON success/error
 	 */
 	@RequestMapping(value = "/groups", method = RequestMethod.GET)
 	@ResponseBody
@@ -46,14 +46,14 @@ public class GroupRestController {
 
 			// In case of empty list returned sending NO.CONTENT to client
 			if (groups == null || groups.isEmpty()) {
-				return new ResponseEntity<Object>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
 			}
 
-			return new ResponseEntity<Object>(AppResponse.successResult(groups), HttpStatus.OK);
+			return new ResponseEntity<>(AppResponse.successResult(groups), HttpStatus.OK);
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("Group Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -73,14 +73,14 @@ public class GroupRestController {
 			Group group = groupRepository.findBy(id);
 
 			if (group == null) {
-				return new ResponseEntity<Object>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
 			}
 
-			return new ResponseEntity<Object>(AppResponse.successResult(group), HttpStatus.OK);
+			return new ResponseEntity<>(AppResponse.successResult(group), HttpStatus.OK);
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("Group Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -101,12 +101,12 @@ public class GroupRestController {
 			List<Group> groups = groupRepository.findAny(group);
 
 			if (groups.isEmpty()) {
-				return new ResponseEntity<Object>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(AppResponse.errorGroupNotFound(), HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<Object>(AppResponse.successResult(groups), HttpStatus.OK);
+			return new ResponseEntity<>(AppResponse.successResult(groups), HttpStatus.OK);
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<Object>(AppResponse.appError(e.getErrorMessage()),
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}

@@ -48,7 +48,7 @@ public class TestGroupFileParser {
 
 		List<Group> list = parser.parseRecords(records);
 
-		Assertions.assertEquals(list.get(1).getMembers().size(), 3,
+		Assertions.assertEquals(3, list.get(1).getMembers().size(),
 				"daemon:x:1:member1,member2,member3 group member test");
 
 	}
@@ -66,21 +66,21 @@ public class TestGroupFileParser {
 
 		List<Group> list = parser.parseRecords(records);
 
-		Assertions.assertEquals(list.size(), 7, "group file loading test");
+		Assertions.assertEquals(7, list.size(), "group file loading test");
 	}
 
 	@SuppressWarnings("unused")
 	@Test
 	public void fileParseErrorExceptionThrown() {
 
-		Assertions.assertThrows(PaaSApplicationException.class, () -> {
-			GroupRecordsParser parser = new GroupRecordsParser();
-			Path path = StringToPath.getPath(dummyFile);
-
-			FileReader fr = new FileReader();
-
-			List<String> records = fr.readFileInList(path);
-			List<Group> list = parser.parseRecords(records);
-		});
+        PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
+            GroupRecordsParser parser = new GroupRecordsParser();
+            Path path = StringToPath.getPath(dummyFile);
+            
+            FileReader fr = new FileReader();
+            
+            List<String> records = fr.readFileInList(path);
+            List<Group> list = parser.parseRecords(records);
+        });
 	}
 }

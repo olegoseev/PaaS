@@ -40,21 +40,21 @@ public class UserFilter {
 		}
 
 		public UserFilter build() {
-			filter = new FilterImpl<User>(byName, name);
+			filter = new FilterImpl<>(byName, name);
 
-			Filter<User> uf = new FilterImpl<User>(byUid, uid);
+			Filter<User> uf = new FilterImpl<>(byUid, uid);
 			filter.setNextFilter(uf);
 
-			Filter<User> gf = new FilterImpl<User>(byGid, gid);
+			Filter<User> gf = new FilterImpl<>(byGid, gid);
 			uf.setNextFilter(gf);
 
-			Filter<User> cf = new FilterImpl<User>(byComments, comments);
+			Filter<User> cf = new FilterImpl<>(byComments, comments);
 			gf.setNextFilter(cf);
 
-			Filter<User> hf = new FilterImpl<User>(byHome, home);
+			Filter<User> hf = new FilterImpl<>(byHome, home);
 			cf.setNextFilter(hf);
 
-			Filter<User> sf = new FilterImpl<User>(byShell, shell);
+			Filter<User> sf = new FilterImpl<>(byShell, shell);
 			hf.setNextFilter(sf);
 
 			return new UserFilter(this);

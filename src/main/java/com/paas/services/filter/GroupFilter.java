@@ -33,12 +33,12 @@ public class GroupFilter {
 		}
 
 		public GroupFilter build() {
-			filter = new FilterImpl<Group>(byName, name);
+			filter = new FilterImpl<>(byName, name);
 
-			Filter<Group> gf = new FilterImpl<Group>(byGid, gid);
+			Filter<Group> gf = new FilterImpl<>(byGid, gid);
 			filter.setNextFilter(gf);
 
-			Filter<Group> mf = new FilterImpl<Group>(byMembers, members);
+			Filter<Group> mf = new FilterImpl<>(byMembers, members);
 			gf.setNextFilter(mf);
 
 			return new GroupFilter(this);

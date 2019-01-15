@@ -17,7 +17,7 @@ public interface RecordsParser<T> {
 	/**
 	 * Parse a file
 	 * 
-	 * @param value path to the file
+         * @param records
 	 * @return the list of objects
 	 * @throws PaaSApplicationException 
 	 */

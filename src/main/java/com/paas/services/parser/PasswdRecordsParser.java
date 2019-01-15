@@ -20,7 +20,7 @@ import com.paas.model.User;
 
 @Service
 public class PasswdRecordsParser implements RecordsParser<User> {
-	
+
 	private final int NAME = 0;
 	private final int UID = 2;
 	private final int GID = 3;
@@ -28,6 +28,7 @@ public class PasswdRecordsParser implements RecordsParser<User> {
 	private final int HOME = 5;
 	private final int SHELL = 6;
 
+	@Override
 	public List<User> parseRecords(List<String> records) throws PaaSApplicationException {
 
 		if (records.isEmpty()) {
@@ -37,9 +38,7 @@ public class PasswdRecordsParser implements RecordsParser<User> {
 
 		try {
 			// Parsing the file and store records in the list
-			for (String record : records) {
-
-				String[] parts = record.split(":");
+			records.stream().map((record) -> record.split(":")).map((parts) -> {
 				User user = new User();
 				user.setName(parts[NAME]);
 				user.setUid(Integer.parseInt(parts[UID]));
@@ -47,8 +46,11 @@ public class PasswdRecordsParser implements RecordsParser<User> {
 				user.setComment(parts[COMMENTS]);
 				user.setHome(parts[HOME]);
 				user.setShell(parts[SHELL]);
+				return user;
+			}).forEachOrdered((user) -> {
 				users.add(user);
-			}
+			});
+
 		} catch (PatternSyntaxException pe) {
 			throw new PaaSApplicationException(PasswdRecordsParser.class, "Regular expression syntax error");
 		} catch (NumberFormatException ne) {

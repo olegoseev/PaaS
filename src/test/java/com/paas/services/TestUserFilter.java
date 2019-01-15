@@ -23,7 +23,7 @@ import com.paas.services.filter.UserFilter;
 @ActiveProfiles("test")
 public class TestUserFilter {
 
-	private static List<User> records = new ArrayList<>();
+	private static final List<User> records = new ArrayList<>();
 	
 	@BeforeAll
 	public static void init() {
@@ -100,7 +100,7 @@ public class TestUserFilter {
 	public void testUserUidFilter() {
 		
 		User criteria = new User();
-		criteria.setUid(4);;
+		criteria.setUid(4);
 		
 		UserFilter uf = UserFilter.Builder.newInstance().setCriteria(criteria).build();
 		List<User> result = uf.apply(records);
@@ -122,7 +122,7 @@ public class TestUserFilter {
 	public void testUserGidFilter() {
 		
 		User criteria = new User();
-		criteria.setGid(2);;
+		criteria.setGid(2);
 		
 		UserFilter uf = UserFilter.Builder.newInstance().setCriteria(criteria).build();
 		List<User> result = uf.apply(records);

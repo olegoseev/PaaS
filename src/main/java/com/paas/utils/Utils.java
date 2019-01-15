@@ -19,6 +19,7 @@ public class Utils {
 	/**
 	 * Concatenate two lists
 	 * 
+         * @param <T>
 	 * @param list1 List object
 	 * @param list2 List object
 	 * @return List object containing elements from list1 and list2
@@ -33,7 +34,6 @@ public class Utils {
 			return list1;
 		}
 
-		List<T> list = Stream.of(list1, list2).flatMap(List::stream).distinct().collect(Collectors.toList());
-		return list;
+		return Stream.of(list1, list2).flatMap(List::stream).distinct().collect(Collectors.toList());
 	}
 }

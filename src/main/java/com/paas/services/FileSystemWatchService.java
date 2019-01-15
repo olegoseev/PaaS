@@ -107,7 +107,6 @@ public class FileSystemWatchService {
 				}
 			} catch (PaaSApplicationException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
 		});
 	}
