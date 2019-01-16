@@ -21,25 +21,25 @@ import com.paas.services.parser.PasswdRecordsParser;
 public class SmokeTest {
 	@Autowired
 	private UserRestController userController;
-	
+
 	@Autowired
 	private GroupRestController groupController;
-	
+
 	@Autowired
 	private GroupRecordsParser groupParser;
-	
-	@Autowired 
+
+	@Autowired
 	private PasswdRecordsParser userParser;
-	
+
 	@Autowired
 	private GroupRecordsRepository groupRepo;
-	
+
 	@Autowired
 	private UserRecordsRepository userRepo;
-	
+
 	@Test
 	public void contextLoads() {
-		Assertions.assertNotNull(userController); 
+		Assertions.assertNotNull(userController);
 		Assertions.assertNotNull(groupController);
 		Assertions.assertNotNull(groupParser);
 		Assertions.assertNotNull(userParser);

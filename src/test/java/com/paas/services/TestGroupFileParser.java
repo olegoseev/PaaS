@@ -73,14 +73,14 @@ public class TestGroupFileParser {
 	@Test
 	public void fileParseErrorExceptionThrown() {
 
-        PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
-            GroupRecordsParser parser = new GroupRecordsParser();
-            Path path = StringToPath.getPath(dummyFile);
-            
-            FileReader fr = new FileReader();
-            
-            List<String> records = fr.readFileInList(path);
-            List<Group> list = parser.parseRecords(records);
-        });
+		PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
+			GroupRecordsParser parser = new GroupRecordsParser();
+			Path path = StringToPath.getPath(dummyFile);
+
+			FileReader fr = new FileReader();
+
+			List<String> records = fr.readFileInList(path);
+			List<Group> list = parser.parseRecords(records);
+		});
 	}
 }

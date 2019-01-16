@@ -6,10 +6,10 @@ import com.paas.PaaSApplicationException;
 
 public abstract class BaseRepositoryImpl<PK, T> implements BaseRepository<PK, T> {
 
-        @Override
+	@Override
 	public abstract List<T> findAll() throws PaaSApplicationException;
 
-        @Override
+	@Override
 	public List<T> findAny(T criteria) throws PaaSApplicationException {
 		List<T> records = findAll();
 		return applyFilter(records, criteria);
@@ -17,7 +17,7 @@ public abstract class BaseRepositoryImpl<PK, T> implements BaseRepository<PK, T>
 
 	protected abstract List<T> applyFilter(List<T> records, T criteria);
 
-        @Override
+	@Override
 	public T findBy(PK pk) throws PaaSApplicationException {
 		List<T> records = findAll();
 		return filterByPk(pk, records);

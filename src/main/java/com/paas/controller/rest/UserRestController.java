@@ -56,8 +56,7 @@ public class UserRestController {
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -82,8 +81,7 @@ public class UserRestController {
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -114,8 +112,7 @@ public class UserRestController {
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -144,8 +141,7 @@ public class UserRestController {
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -155,7 +151,7 @@ public class UserRestController {
 	 * 
 	 * @param map
 	 * @return User object
-	 * @throws PaaSApplicationException 
+	 * @throws PaaSApplicationException
 	 */
 	private User makeUserFromMap(Map<String, String> map) throws PaaSApplicationException {
 

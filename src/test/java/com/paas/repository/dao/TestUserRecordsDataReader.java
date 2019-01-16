@@ -22,18 +22,19 @@ import com.paas.model.User;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-@TestPropertySource (properties = {"user.records = src/test/resources/passwd","dummy.file = src/test/resources/missing"})
+@TestPropertySource(properties = { "user.records = src/test/resources/passwd",
+		"dummy.file = src/test/resources/missing" })
 public class TestUserRecordsDataReader {
-	
+
 	@Value("${dummy.file}")
 	private String dummyFile;
-	
+
 	@Value("${user.records}")
 	private String realFile;
-	
+
 	@Autowired
 	UserRecordsDataReader dataReader;
-	
+
 	@Test
 	public void testReadData() throws PaaSApplicationException {
 		ReflectionTestUtils.setField(dataReader, "path", realFile);

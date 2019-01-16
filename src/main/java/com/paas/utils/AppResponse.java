@@ -51,7 +51,7 @@ public class AppResponse {
 	/**
 	 * General error
 	 * 
-         * @param message
+	 * @param message
 	 * @return map
 	 */
 	public static Map<String, Object> appError(String message) {
@@ -83,7 +83,7 @@ public class AppResponse {
 	/**
 	 * Success
 	 * 
-         * @param obj
+	 * @param obj
 	 * @return map
 	 */
 	public static Map<String, Object> successResult(Object obj) {

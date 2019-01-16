@@ -17,7 +17,7 @@ public class FilterImpl<T> implements Filter<T> {
 
 	protected Filter<T> filter;
 
-        @Override
+	@Override
 	public void setNextFilter(Filter<T> filter) {
 		this.filter = filter;
 	}
@@ -26,7 +26,7 @@ public class FilterImpl<T> implements Filter<T> {
 		return filter != null;
 	}
 
-        @Override
+	@Override
 	public List<T> meet(List<T> records, T template) {
 		if (field.test(template)) {
 			records = records.stream().filter(record -> criteria.test(record)).collect(Collectors.toList());

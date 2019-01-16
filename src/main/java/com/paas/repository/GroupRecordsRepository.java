@@ -27,7 +27,7 @@ public class GroupRecordsRepository extends BaseRepositoryImpl<Integer, Group> {
 		return gf.apply(records);
 	}
 
-        @Override
+	@Override
 	Group filterByPk(Integer id, List<Group> groups) {
 		Optional<Group> group = groups.stream().filter(g -> g.getGid() == id).findFirst();
 		// Make sure we found something

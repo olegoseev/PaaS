@@ -62,10 +62,10 @@ public class TestReadFileInList {
 	@Test
 	public void fileReadErrorExceptionThrown() {
 
-        PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
-            File file = ResourceUtils.getFile(dummyFile);
-            Path path = Paths.get(file.getAbsolutePath());
-            List<String> list = fileReader.readFileInList(path);
-        });
+		PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
+			File file = ResourceUtils.getFile(dummyFile);
+			Path path = Paths.get(file.getAbsolutePath());
+			List<String> list = fileReader.readFileInList(path);
+		});
 	}
 }

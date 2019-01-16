@@ -53,8 +53,7 @@ public class GroupRestController {
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("Group Repository encounter an error", e);
-			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -80,8 +79,7 @@ public class GroupRestController {
 
 		} catch (PaaSApplicationException e) {
 			LOG.error("Group Repository encounter an error", e);
-			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -106,8 +104,7 @@ public class GroupRestController {
 			return new ResponseEntity<>(AppResponse.successResult(groups), HttpStatus.OK);
 		} catch (PaaSApplicationException e) {
 			LOG.error("User Repository encounter an error", e);
-			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(AppResponse.appError(e.getErrorMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 	}
@@ -118,7 +115,7 @@ public class GroupRestController {
 	 * 
 	 * @param map
 	 * @return User object
-	 * @throws PaaSApplicationException 
+	 * @throws PaaSApplicationException
 	 */
 	private Group makeGroupFromMap(MultiValueMap<String, String> map) throws PaaSApplicationException {
 		try {

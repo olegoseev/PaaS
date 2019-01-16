@@ -57,17 +57,17 @@ public class TestPasswdFileParser {
 	@Test
 	public void fileParseErrorExceptionThrown() {
 
-        PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
-            PasswdRecordsParser parser = new PasswdRecordsParser();
-            
-            Path path = StringToPath.getPath(dummyFile);
-            
-            FileReader fr = new FileReader();
-            
-            List<String> records = fr.readFileInList(path);
-            
-            List<User> list = parser.parseRecords(records);
-            
-        });
+		PaaSApplicationException assertThrows = Assertions.assertThrows(PaaSApplicationException.class, () -> {
+			PasswdRecordsParser parser = new PasswdRecordsParser();
+
+			Path path = StringToPath.getPath(dummyFile);
+
+			FileReader fr = new FileReader();
+
+			List<String> records = fr.readFileInList(path);
+
+			List<User> list = parser.parseRecords(records);
+
+		});
 	}
 }

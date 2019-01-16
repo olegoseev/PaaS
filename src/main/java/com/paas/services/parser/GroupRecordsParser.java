@@ -27,8 +27,7 @@ public class GroupRecordsParser implements RecordsParser<Group> {
 	private final int GID = 2;
 	private final int MEMBERS = 3;
 
-
-        @Override
+	@Override
 	public List<Group> parseRecords(List<String> records) throws PaaSApplicationException {
 
 		if (records.isEmpty()) {
